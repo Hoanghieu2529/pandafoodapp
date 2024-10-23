@@ -131,10 +131,10 @@ public class MS_Admin_Confirm extends javax.swing.JDialog {
         panelRound1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(134, 168, 231), 2));
         panelRound1.setOpaque(true);
 
-        lbTitle.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        lbTitle.setForeground(new java.awt.Color(108, 91, 123));
+        lbTitle.setFont(new java.awt.Font("SansSerif", 1, 24)); // NOI18N
+        lbTitle.setForeground(new java.awt.Color(147, 5, 13));
         lbTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbTitle.setText("BẠN ĐÃ CHẮC CHƯA ? ");
+        lbTitle.setText("XÁC NHẬN THAY ĐỔI ? ");
 
         cmdOK.setBackground(new java.awt.Color(17, 153, 142));
         cmdOK.setForeground(new java.awt.Color(108, 91, 123));

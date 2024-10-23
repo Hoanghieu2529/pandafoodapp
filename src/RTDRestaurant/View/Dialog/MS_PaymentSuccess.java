@@ -60,7 +60,6 @@ public class MS_PaymentSuccess extends javax.swing.JDialog {
         panelRound1 = new RTDRestaurant.View.Swing.PanelRound();
         lbTitle = new javax.swing.JLabel();
         lbIcon = new javax.swing.JLabel();
-        cmdClose = new javax.swing.JLabel();
         lbMessage = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -78,13 +77,6 @@ public class MS_PaymentSuccess extends javax.swing.JDialog {
         lbTitle.setText("XÁC NHẬN THANH TOÁN THÀNH CÔNG");
 
         lbIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/cash-payment.png"))); // NOI18N
-
-        cmdClose.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/close (2).png"))); // NOI18N
-        cmdClose.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                cmdCloseMouseClicked(evt);
-            }
-        });
 
         lbMessage.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         lbMessage.setForeground(new java.awt.Color(108, 91, 123));
@@ -106,17 +98,14 @@ public class MS_PaymentSuccess extends javax.swing.JDialog {
                         .addGroup(panelRound1Layout.createSequentialGroup()
                             .addGap(247, 247, 247)
                             .addComponent(lbIcon)
-                            .addGap(193, 193, 193)
-                            .addComponent(cmdClose))))
+                            .addGap(217, 217, 217))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panelRound1Layout.setVerticalGroup(
             panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelRound1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(cmdClose)
-                    .addComponent(lbIcon))
+                .addComponent(lbIcon)
                 .addGap(20, 20, 20)
                 .addComponent(lbTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
@@ -138,10 +127,6 @@ public class MS_PaymentSuccess extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void cmdCloseMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cmdCloseMouseClicked
-        closeMenu();
-    }//GEN-LAST:event_cmdCloseMouseClicked
-
     private void closeMenu() {
         if (animator.isRunning()) {
             animator.stop();
@@ -161,7 +146,6 @@ public class MS_PaymentSuccess extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel cmdClose;
     private javax.swing.JLabel lbIcon;
     private javax.swing.JLabel lbMessage;
     private javax.swing.JLabel lbTitle;
