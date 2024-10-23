@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿# Hệ thống quản lý nhà hàng - Royal The Dreamers Restaurant
 
 ![Logo](./src/Icons/logo_register.png)
@@ -116,3 +117,19 @@ Xây dựng hệ thống Quản lý Nhà Hàng một cách chuyên nghi�
  - [Java Swing UI Design - School Management Dashboard](https://github.com/DJ-Raven/java-swing-school-management-dashboard)
  - [Java UI Design - Dashboard Desktop Application](https://github.com/DJ-Raven/java-ui-dashboard-008)
 
+=======
+# 1. Thông tin về pandafoodapp
+- Ứng dụng quản lý nhà hàng Panda. <br> 
+- Ngôn ngữ sử dụng: `Java` <br>
+- Công cụ thiết kế: `Java swing`  <br>
+- Cơ sở dữ liệu: `Mysql`  <br>
+- IDE: `Netbeans`  <br>
+- Công cụ quản lý phiên bản: `git`  <br>
+- Công cụ quản lý mã nguồn: `github`  <br>
+
+# 2. Yêu cầu cài dặt:
+- `JDK 17`/JDK22 <br>
+- `ojdbc8.jar` <br>
+- `Netbeans` <br>
+- `Mysql` <br>
+>>>>>>> 8305bb572876a5b6446bca62b589e6f41f844374
