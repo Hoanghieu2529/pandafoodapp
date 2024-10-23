@@ -1,5 +1,5 @@
 # 1. thông tin về pandafoodapp
-Ứng dụng quản lý nhà hàng Panda.
+/n Ứng dụng quản lý nhà hàng Panda.
 Ngôn ngữ sử dụng: Java 
 Công cụ thiết kế: Java swing
 Cơ sở dữ liệu: Mysql
