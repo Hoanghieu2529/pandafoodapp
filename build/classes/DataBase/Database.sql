@@ -1171,7 +1171,7 @@ Pk Fk
 --Them data cho Bang NguoiDung
 --Nhan vien
 */
-INSERT INTO NguoiDung(ID_ND,Email,MatKhau,Trangthai,Vaitro) VALUES (100,'NVHoangHieu@gmail.com','123','Verified','Quan Ly');
+INSERT INTO NguoiDung(ID_ND,Email,MatKhau,Trangthai,Vaitro) VALUES (100,'NVHoangHieu@gmail.com','123','Verified','NhanVien');
 INSERT INTO NguoiDung(ID_ND,Email,MatKhau,Trangthai,Vaitro) VALUES (101,'NVAnhDuc@gmail.com','123','Verified','Quan Ly');
 INSERT INTO NguoiDung(ID_ND,Email,MatKhau,Trangthai,Vaitro) VALUES (102,'NVThebao@gmail.com','123','Verified','Nhan Vien Kho');
 INSERT INTO NguoiDung(ID_ND,Email,MatKhau,Trangthai,Vaitro) VALUES (103,'NVNgocDinh@gmail.com','123','Verified','Nhan Vien');
