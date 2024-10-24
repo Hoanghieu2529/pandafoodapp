@@ -1,4 +1,3 @@
-
 package RTDRestaurant.View.Main_Frame;
 
 import RTDRestaurant.Controller.Connection.DatabaseConnection;
