@@ -51,7 +51,7 @@ public class Main_Customer_Frame extends javax.swing.JFrame {
                 switch (menuIndex) {
                     case 0 -> {
                         switch (subMenuIndex) {
-                            case 0 -> main.showForm(new FoodMenu_Form("Aries",user));
+                            case 0 -> main.showForm(new FoodMenu_Form("Ti",user));
                             case 1 -> main.showForm(new FoodMenu_Form("Taurus",user));
                             case 2 -> main.showForm(new FoodMenu_Form("Gemini",user));
                             case 3 -> main.showForm(new FoodMenu_Form("Cancer",user));
