@@ -24,9 +24,9 @@ public class DatabaseConnection {
     }
     //Thực hiện kết nối tới Database
     public void connectToDatabase() throws SQLException {
-        final String url = "jdbc:oracle:thin:@localhost:1521:orcl";
-        final String username = "Doan";
-        final String password = "123";
+        final String url = "jdbc:oracle:hr:@localhost:1521:orcl";
+        final String username = "hr";
+        final String password = "hr";
         connection = DriverManager.getConnection(url, username, password);
     }
  

@@ -142,10 +142,10 @@ alter table Voucher
 ---Them khoa chinh
 alter table Voucher
     add constraint Voucher_PK PRIMARY KEY (Code_Voucher);
-    
+/*  
 --Tao bang HoaDon
 --drop table HoaDon;
-
+*/
 create table HoaDon(
     ID_HoaDon NUMBER(8,0),
     ID_KH number(8,0),
@@ -215,9 +215,10 @@ alter table NguyenLieu
 --Them khoa chinh
 alter table NguyenLieu
     add constraint NL_PK PRIMARY KEY (ID_NL);
-
+/*
 --Tao bang Kho
 --drop table Kho;
+*/
 create table Kho(
     ID_NL NUMBER(8,0),
     SLTon NUMBER(3,0) DEFAULT 0
@@ -255,9 +256,10 @@ ALTER TABLE PhieuNK
  ADD CONSTRAINT PNK_fk_idNV FOREIGN KEY 
  (ID_NV) REFERENCES NhanVien(ID_NV);
 
-
+/*
 --Them bang CTNK
 --drop table CTNK;
+*/
 create table CTNK(
     ID_NK NUMBER(8,0),
     ID_NL number(8,0),
@@ -330,21 +332,25 @@ ALTER TABLE CTXK
 
 --Khach hang chi duoc co toi da mot hoa don co trang thai Chua thanh toan
 CREATE OR REPLACE TRIGGER Tg_SLHD_CTT
-BEFORE INSERT OR UPDATE OF ID_KH,TrangThai ON HoaDon
+BEFORE INSERT OR UPDATE OF ID_KH, TrangThai ON HoaDon
 FOR EACH ROW
 DECLARE 
     v_count NUMBER;
 BEGIN
+    -- S? d?ng INTO ?? l?y k?t qu? t? SELECT vào bi?n v_count
     SELECT COUNT(*)
+    INTO v_count  -- ??a k?t qu? vào bi?n v_count
     FROM HoaDon
-    WHERE ID_KH=:new.ID_KH AND TrangThai='Chua thanh toan';
-    
-    IF v_count>1 THEN
-     RAISE_APPLICATION_ERROR(-20000,'Moi khach hang chi duoc co toi da mot hoa don co trang thai
-     chua thanh toan');
+    WHERE ID_KH = :new.ID_KH AND TrangThai = 'Chua thanh toan';
+
+    -- Ki?m tra s? l??ng hóa ??n có tr?ng thái 'Chua thanh toan'
+    IF v_count > 0 THEN
+        -- N?u ?ã có 1 hóa ??n 'Chua thanh toan', không cho phép t?o thêm
+        RAISE_APPLICATION_ERROR(-20000, 'Moi khach hang chi duoc co toi da mot hoa don co trang thai chua thanh toan');
     END IF;
 END;
 /
+
 --  Trigger Thanh tien o CTHD bang SoLuong x Dongia cua mon an do
 
 CREATE OR REPLACE TRIGGER Tg_CTHD_Thanhtien
@@ -361,6 +367,8 @@ BEGIN
     :new.ThanhTien := :new.SoLuong * gia;
 END;
 /
+
+/**/
 --- Trigger Tien mon an o Hoa Don bang tong thanh tien o CTHD
 CREATE OR REPLACE TRIGGER Tg_HD_TienMonAn
 AFTER INSERT OR UPDATE OR DELETE ON CTHD
@@ -380,6 +388,61 @@ BEGIN
 END;
 /
 --Trigger Tien giam o Hoa Don = tong thanh tien cua mon An duoc giam  x Phantram
+--CREATE OR REPLACE TRIGGER Tg_HD_TienGiam
+--AFTER INSERT OR UPDATE OR DELETE ON CTHD
+--FOR EACH ROW
+--DECLARE 
+--    v_code HoaDon.Code_Voucher%TYPE;
+--    v_loaiMA Voucher.LoaiMA%TYPE;
+--    MA_Loai MonAn.Loai%TYPE;
+--BEGIN
+--    v_code:=NULL;
+----Tim Code Voucher, Loai mon an duoc Ap dung Voucher tu bang Voucher
+--    IF (INSERTING OR UPDATING) THEN
+--        SELECT HoaDon.Code_Voucher,Voucher.LoaiMA 
+--        INTO v_code,v_LoaiMA
+--        FROM HoaDon
+--        LEFT JOIN Voucher ON Voucher.Code_Voucher = HoaDon.Code_Voucher
+--        WHERE ID_HoaDon=:new.ID_HoaDon;
+--    --Tim loai mon an cua Mon an vua duoc them vao CTHD   
+--        SELECT Loai
+--        INTO MA_Loai
+--        FROM MonAn 
+--        WHERE ID_MonAn = :new.ID_MonAn;
+--    END IF;
+--    
+--    IF (DELETING) THEN
+--        SELECT HoaDon.Code_Voucher,Voucher.LoaiMA 
+--        INTO v_code,v_LoaiMA
+--        FROM HoaDon
+--        LEFT JOIN Voucher ON Voucher.Code_Voucher = HoaDon.Code_Voucher
+--        WHERE ID_HoaDon=:old.ID_HoaDon;
+--    --Tim loai mon an cua Mon an vua duoc xoa khoi CTHD   
+--        SELECT Loai
+--        INTO MA_Loai
+--        FROM MonAn 
+--        WHERE ID_MonAn = :old.ID_MonAn;
+--    END IF;
+--    
+--    IF(v_code IS NOT NULL) THEN
+--        IF(v_LoaiMA='All' OR v_LoaiMA=MA_Loai) THEN 
+--            IF INSERTING THEN    
+--                UPDATE HoaDon SET TienGiam = TienGiam + Tinhtiengiam(:new.ThanhTien,v_code) WHERE HoaDon.ID_HoaDon=:new.ID_HoaDon;
+--            END IF;
+--            
+--            IF UPDATING THEN    
+--                UPDATE HoaDon SET TienGiam = TienGiam + Tinhtiengiam(:new.ThanhTien,v_code) - Tinhtiengiam(:old.ThanhTien,v_code) WHERE HoaDon.ID_HoaDon=:new.ID_HoaDon;
+--            END IF;
+--            
+--            IF DELETING THEN    
+--                UPDATE HoaDon SET TienGiam = TienGiam - Tinhtiengiam(:old.ThanhTien,v_code) WHERE HoaDon.ID_HoaDon=:old.ID_HoaDon;
+--            END IF;
+--        END IF;
+--    END IF;
+--END;
+--/
+--
+-- v2
 CREATE OR REPLACE TRIGGER Tg_HD_TienGiam
 AFTER INSERT OR UPDATE OR DELETE ON CTHD
 FOR EACH ROW
@@ -387,52 +450,72 @@ DECLARE
     v_code HoaDon.Code_Voucher%TYPE;
     v_loaiMA Voucher.LoaiMA%TYPE;
     MA_Loai MonAn.Loai%TYPE;
+    v_phantram NUMBER;
 BEGIN
-    v_code:=NULL;
---Tim Code Voucher, Loai mon an duoc Ap dung Voucher tu bang Voucher
-    IF (INSERTING OR UPDATING) THEN
-        SELECT HoaDon.Code_Voucher,Voucher.LoaiMA 
-        INTO v_code,v_LoaiMA
+    v_code := NULL;
+
+    -- X? lý cho INSERTING và UPDATING
+    IF INSERTING OR UPDATING THEN
+        -- L?y Code Voucher và Loai món áp d?ng cho Voucher
+        SELECT HoaDon.Code_Voucher, Voucher.LoaiMA, Voucher.Phantram
+        INTO v_code, v_LoaiMA, v_phantram
         FROM HoaDon
         LEFT JOIN Voucher ON Voucher.Code_Voucher = HoaDon.Code_Voucher
-        WHERE ID_HoaDon=:new.ID_HoaDon;
-    --Tim loai mon an cua Mon an vua duoc them vao CTHD   
+        WHERE ID_HoaDon = :new.ID_HoaDon;
+
+        -- L?y lo?i món ?n v?a ???c thêm vào ho?c c?p nh?t trong CTHD
         SELECT Loai
         INTO MA_Loai
         FROM MonAn 
         WHERE ID_MonAn = :new.ID_MonAn;
     END IF;
-    
-    IF (DELETING) THEN
-        SELECT HoaDon.Code_Voucher,Voucher.LoaiMA 
-        INTO v_code,v_LoaiMA
+
+    -- X? lý cho DELETING
+    IF DELETING THEN
+        -- L?y Code Voucher và Loai món áp d?ng cho Voucher
+        SELECT HoaDon.Code_Voucher, Voucher.LoaiMA, Voucher.Phantram
+        INTO v_code, v_LoaiMA, v_phantram
         FROM HoaDon
         LEFT JOIN Voucher ON Voucher.Code_Voucher = HoaDon.Code_Voucher
-        WHERE ID_HoaDon=:old.ID_HoaDon;
-    --Tim loai mon an cua Mon an vua duoc xoa khoi CTHD   
+        WHERE ID_HoaDon = :old.ID_HoaDon;
+
+        -- L?y lo?i món ?n v?a b? xóa kh?i CTHD
         SELECT Loai
         INTO MA_Loai
         FROM MonAn 
         WHERE ID_MonAn = :old.ID_MonAn;
     END IF;
-    
-    IF(v_code IS NOT NULL) THEN
-        IF(v_LoaiMA='All' OR v_LoaiMA=MA_Loai) THEN 
+
+    -- N?u có mã Voucher
+    IF v_code IS NOT NULL THEN
+        -- Ki?m tra n?u áp d?ng cho t?t c? món ?n ho?c ?úng lo?i món ?n
+        IF v_LoaiMA = 'All' OR v_LoaiMA = MA_Loai THEN 
+            -- X? lý khi thêm dòng m?i vào CTHD
             IF INSERTING THEN    
-                UPDATE HoaDon SET TienGiam = TienGiam + Tinhtiengiam(:new.ThanhTien,v_code) WHERE HoaDon.ID_HoaDon=:new.ID_HoaDon;
+                UPDATE HoaDon 
+                SET TienGiam = TienGiam + (:new.ThanhTien * (v_phantram / 100)) 
+                WHERE HoaDon.ID_HoaDon = :new.ID_HoaDon;
             END IF;
-            
+
+            -- X? lý khi c?p nh?t dòng trong CTHD
             IF UPDATING THEN    
-                UPDATE HoaDon SET TienGiam = TienGiam + Tinhtiengiam(:new.ThanhTien,v_code) - Tinhtiengiam(:old.ThanhTien,v_code) WHERE HoaDon.ID_HoaDon=:new.ID_HoaDon;
+                UPDATE HoaDon 
+                SET TienGiam = TienGiam + (:new.ThanhTien * (v_phantram / 100)) - (:old.ThanhTien * (v_phantram / 100)) 
+                WHERE HoaDon.ID_HoaDon = :new.ID_HoaDon;
             END IF;
-            
+
+            -- X? lý khi xóa dòng kh?i CTHD
             IF DELETING THEN    
-                UPDATE HoaDon SET TienGiam = TienGiam - Tinhtiengiam(:old.ThanhTien,v_code) WHERE HoaDon.ID_HoaDon=:old.ID_HoaDon;
+                UPDATE HoaDon 
+                SET TienGiam = TienGiam - (:old.ThanhTien * (v_phantram / 100)) 
+                WHERE HoaDon.ID_HoaDon = :old.ID_HoaDon;
             END IF;
         END IF;
     END IF;
 END;
 /
+
+
 -- Tong tien o Hoa Don = Tien mon an - Tien giam
 CREATE OR REPLACE TRIGGER Tg_HD_Tongtien
 AFTER INSERT OR UPDATE OF TienMonAn,TienGiam ON HoaDon
@@ -476,9 +559,11 @@ BEGIN
     END IF;
 END;
 /
+/*
 --Trigger Doanh so cua Khach hang bang tong tien cua tat ca hoa don co trang thai 'Da thanh toan' 
 --cua khach hang do
 -- Diem tich luy cua Khach hang duoc tinh bang 0.005% Tong tien cua hoa don (1.000.000d tuong duong 50 diem)
+*/
 CREATE OR REPLACE TRIGGER Tg_KH_DoanhsovaDTL
 AFTER UPDATE OF Trangthai ON HoaDon
 FOR EACH ROW
@@ -586,42 +671,58 @@ END;
 
 --Procedure
 --Procudure them mot khach hang moi voi cac thong tin tenKH , NgayTG va ID_ND
-CREATE OR REPLACE PROCEDURE KH_ThemKH(tenKH KHACHHANG.TenKH%TYPE, NgayTG KHACHHANG.Ngaythamgia%TYPE,
-ID_ND KHACHHANG.ID_ND%TYPE)
+CREATE OR REPLACE PROCEDURE KH_ThemKH(
+    tenKH KHACHHANG.TenKH%TYPE, 
+    NgayTG KHACHHANG.Ngaythamgia%TYPE,
+    ID_ND KHACHHANG.ID_ND%TYPE
+)
 IS
     v_ID_KH KHACHHANG.ID_KH%TYPE;
-IS 
 BEGIN
-    --Them ma KH tiep theo
-    SELECT MIN(ID_KH)+1
+    -- Them ma KH tiep theo
+    SELECT MIN(ID_KH) + 1
     INTO v_ID_KH
     FROM KHACHHANG
-    WHERE ID_KH + 1 NOT IN(SELECT ID_KH FROM KHACHHANG);
+    WHERE ID_KH + 1 NOT IN (SELECT ID_KH FROM KHACHHANG);
     
-    INSERT INTO KhachHang(ID_KH,TenKH,Ngaythamgia,ID_ND) VALUES (v_ID_KH,tenKH,TO_DATE(NgayTG,'dd-MM-YYYY'),ID_ND);
-    EXCEPTION WHEN NO_DATA_FOUND THEN
-        RAISE_APPLICATION_ERROR('Thong tin khong hop le');
+    INSERT INTO KhachHang(ID_KH, TenKH, Ngaythamgia, ID_ND) 
+    VALUES (v_ID_KH, tenKH, TO_DATE(NgayTG, 'dd-MM-YYYY'), ID_ND);
+    
+    EXCEPTION 
+    WHEN NO_DATA_FOUND THEN
+        RAISE_APPLICATION_ERROR(-20000, 'Thong tin khong hop le');
 END;
 /
+
 --Procudure them mot nhan vien moi voi cac thong tin tenNV, NgayVL, SDT, Chucvu, ID_NQL, Tinhtrang
-CREATE OR REPLACE PROCEDURE NV_ThemNV(tenNV NHANVIEN.TenNV%TYPE, NgayVL NHANVIEN.NgayVL%TYPE, SDT NHANVIEN.SDT%TYPE,
-Chucvu NHANVIEN.Chucvu%TYPE,ID_NQL NHANVIEN.ID_NQL%TYPE, Tinhtrang NHANVIEN.Tinhtrang%TYPE)
+
+CREATE OR REPLACE PROCEDURE NV_ThemNV(
+    tenNV NHANVIEN.TenNV%TYPE, 
+    NgayVL NHANVIEN.NgayVL%TYPE, 
+    SDT NHANVIEN.SDT%TYPE,
+    Chucvu NHANVIEN.Chucvu%TYPE,
+    ID_NQL NHANVIEN.ID_NQL%TYPE, 
+    Tinhtrang NHANVIEN.Tinhtrang%TYPE
+)
 IS
     v_ID_NV NHANVIEN.ID_NV%TYPE;
-IS 
 BEGIN
-    --Them ma KH tiep theo
-    SELECT MIN(ID_NV)+1
+    -- Them ma NV tiep theo
+    SELECT MIN(ID_NV) + 1
     INTO v_ID_NV
     FROM NHANVIEN
-    WHERE ID_NV + 1 NOT IN(SELECT ID_NV FROM NHANVIEN);
+    WHERE ID_NV + 1 NOT IN (SELECT ID_NV FROM NHANVIEN);
     
-    INSERT INTO NhanVien(ID_NV,TenNV,NgayVL,SDT,Chucvu,ID_NQL,Tinhtrang) 
-    VALUES (v_ID_NV,tenNV,TO_DATE(NgayVL,'dd-MM-YYYY'),SDT,Chucvu,ID_NQL,Tinhtrang);
-    EXCEPTION WHEN NO_DATA_FOUND THEN
-        RAISE_APPLICATION_ERROR('Thong tin khong hop le');
+    INSERT INTO NhanVien(ID_NV, TenNV, NgayVL, SDT, Chucvu, ID_NQL, Tinhtrang) 
+    VALUES (v_ID_NV, tenNV, TO_DATE(NgayVL, 'dd-MM-YYYY'), SDT, Chucvu, ID_NQL, Tinhtrang);
+    
+    EXCEPTION 
+    WHEN NO_DATA_FOUND THEN
+        RAISE_APPLICATION_ERROR(-20000, 'Thong tin khong hop le');
 END;
 /
+
+
 -- Procudure xoa mot NHANVIEN voi idNV
 CREATE OR REPLACE PROCEDURE NV_XoaNV(idNV NHANVIEN.ID_NV%TYPE)
 IS
@@ -689,117 +790,205 @@ END;
 CREATE OR REPLACE PROCEDURE KH_XemTT(idKH KHACHHANG.ID_KH%TYPE)
 IS
 BEGIN 
-    FOR cur IN (SELECT TenKH,Ngaythamgia,Doanhso,Diemtichluy,ID_ND
-    FROM KHACHHANG WHERE ID_KH=idKH;
-    )
+    FOR cur IN (SELECT TenKH, Ngaythamgia, Doanhso, Diemtichluy, ID_ND
+                FROM KHACHHANG 
+                WHERE ID_KH = idKH)  -- Bo dau cham phay o day
     LOOP
-        DBMS_OUTPUT.PUT_LINE('Ma khach hang: '||idKH);
-        DBMS_OUTPUT.PUT_LINE('Ten khach hang: '||cur.TenKH);
-        DBMS_OUTPUT.PUT_LINE('Ngay tham gia: '||TO_CHAR(cur.Ngaythamgia,'dd-MM-YYYY');
-        DBMS_OUTPUT.PUT_LINE('Doanh so: '||cur.Doanhso);
-        DBMS_OUTPUT.PUT_LINE('Diemtichluy: '||cur.Diemtichluy);
-        DBMS_OUTPUT.PUT_LINE('Ma nguoi dung: '||cur.ID_ND);
-        
-        EXCEPTION WHEN NO_DATA_FOUND THEN
-             RAISE_APPLICATION_ERROR(-20000,'Khach hang khong ton tai');
+        DBMS_OUTPUT.PUT_LINE('Ma khach hang: ' || idKH);
+        DBMS_OUTPUT.PUT_LINE('Ten khach hang: ' || cur.TenKH);
+        DBMS_OUTPUT.PUT_LINE('Ngay tham gia: ' || TO_CHAR(cur.Ngaythamgia, 'dd-MM-YYYY'));
+        DBMS_OUTPUT.PUT_LINE('Doanh so: ' || cur.Doanhso);
+        DBMS_OUTPUT.PUT_LINE('Diem tich luy: ' || cur.Diemtichluy);
+        DBMS_OUTPUT.PUT_LINE('Ma nguoi dung: ' || cur.ID_ND);
     END LOOP;
+    
+    EXCEPTION 
+        WHEN NO_DATA_FOUND THEN
+            RAISE_APPLICATION_ERROR(-20000, 'Khach hang khong ton tai');
 END;
 /
+
 -- Procedure xem thong tin NHANVIEN voi thong tin idNV
 CREATE OR REPLACE PROCEDURE NV_XemTT(idNV NHANVIEN.ID_NV%TYPE)
 IS
 BEGIN 
-    FOR cur IN (SELECT TenKH,NgayVL,SDT,Chucvu,ID_NQL   
-    FROM NHANVIEN WHERE ID_NV=idNV;
-    )
+    FOR cur IN (SELECT TenNV, NgayVL, SDT, Chucvu, ID_NQL   
+                FROM NHANVIEN 
+                WHERE ID_NV = idNV)  -- B? d?u ch?m ph?y ? ?ây
     LOOP
-        DBMS_OUTPUT.PUT_LINE('Ma nhan vien: '||idNV);
-        DBMS_OUTPUT.PUT_LINE('Ten nhan vien: '||cur.TenNV);
-        DBMS_OUTPUT.PUT_LINE('Ngay vao lam: '||TO_CHAR(cur.NgayVL,'dd-MM-YYYY');
-        DBMS_OUTPUT.PUT_LINE('Chuc vu: '||cur.Chucvu);
-        DBMS_OUTPUT.PUT_LINE('Ma nguoi quan ly: '||cur.ID_NQL);
-        
-        EXCEPTION WHEN NO_DATA_FOUND THEN
-             RAISE_APPLICATION_ERROR(-20000,'Nhan vien khong ton tai');
+        DBMS_OUTPUT.PUT_LINE('Ma nhan vien: ' || idNV);
+        DBMS_OUTPUT.PUT_LINE('Ten nhan vien: ' || cur.TenNV);
+        DBMS_OUTPUT.PUT_LINE('Ngay vao lam: ' || TO_CHAR(cur.NgayVL, 'dd-MM-YYYY'));
+        DBMS_OUTPUT.PUT_LINE('Chuc vu: ' || cur.Chucvu);
+        DBMS_OUTPUT.PUT_LINE('Ma nguoi quan ly: ' || cur.ID_NQL);
     END LOOP;
+    
+    EXCEPTION 
+        WHEN NO_DATA_FOUND THEN
+             RAISE_APPLICATION_ERROR(-20000, 'Nhan vien khong ton tai');
 END;
 /
 
+
 -- Procedure liet ke danh sach hoa don tu ngay A den ngay B
+--CREATE OR REPLACE PROCEDURE NV_XemTT(idNV NHANVIEN.ID_NV%TYPE)
+--IS
+--BEGIN 
+--    FOR cur IN (SELECT TenNV, NgayVL, SDT, Chucvu, ID_NQL   
+--                FROM NHANVIEN 
+--                WHERE ID_NV = idNV)  -- Không có d?u ch?m ph?y
+--    LOOP
+--        DBMS_OUTPUT.PUT_LINE('Ma nhan vien: ' || idNV);
+--        DBMS_OUTPUT.PUT_LINE('Ten nhan vien: ' || cur.TenNV);
+--        DBMS_OUTPUT.PUT_LINE('Ngay vao lam: ' || TO_CHAR(cur.NgayVL, 'dd-MM-YYYY'));
+--        DBMS_OUTPUT.PUT_LINE('Chuc vu: ' || cur.Chucvu);
+--        DBMS_OUTPUT.PUT_LINE('Ma nguoi quan ly: ' || cur.ID_NQL);
+--           
+--        EXCEPTION WHEN NO_DATA_FOUND THEN
+--             RAISE_APPLICATION_ERROR(-20000,'Khong co hoa don nao');
+--    END LOOP;
+--END;
+--/
+
+CREATE OR REPLACE PROCEDURE NV_XemTT(idNV NHANVIEN.ID_NV%TYPE)
+IS
+BEGIN 
+    FOR cur IN (SELECT TenNV, NgayVL, SDT, Chucvu, ID_NQL   
+                FROM NHANVIEN 
+                WHERE ID_NV = idNV)  -- Không có d?u ch?m ph?y
+    LOOP
+        DBMS_OUTPUT.PUT_LINE('Ma nhan vien: ' || idNV);
+        DBMS_OUTPUT.PUT_LINE('Ten nhan vien: ' || cur.TenNV);
+        DBMS_OUTPUT.PUT_LINE('Ngay vao lam: ' || TO_CHAR(cur.NgayVL, 'dd-MM-YYYY'));
+        DBMS_OUTPUT.PUT_LINE('Chuc vu: ' || cur.Chucvu);
+        DBMS_OUTPUT.PUT_LINE('Ma nguoi quan ly: ' || cur.ID_NQL);
+    END LOOP;
+    
+    -- Kh?i EXCEPTION ph?i n?m ngoài vòng l?p
+    EXCEPTION 
+        WHEN NO_DATA_FOUND THEN
+            RAISE_APPLICATION_ERROR(-20000, 'Nhan vien khong ton tai');
+END;
+/
+-- danh sach hoa don tu a den b
 CREATE OR REPLACE PROCEDURE DS_HoaDon_tuAdenB(fromA DATE, toB DATE)
 IS
 BEGIN 
-    FOR cur IN (SELECT ID_HOADON,ID_KH,ID_BAN,NGAYHD,TIENMONAN,TIENGIAM,TONGTIEN,TRANGTHAI   
-    FROM HOADON WHERE NGAYHD BETWEEN fromA AND (toB +1);
-    )
+    FOR cur IN (SELECT ID_HOADON, ID_KH, ID_BAN, NGAYHD, TIENMONAN, TIENGIAM, TONGTIEN, TRANGTHAI   
+                FROM HOADON 
+                WHERE NGAYHD BETWEEN fromA AND (toB + 1))  -- Không có d?u ch?m ph?y ? ?ây
     LOOP
-        DBMS_OUTPUT.PUT_LINE('Ma hoa don: '||cur.ID_HOADON);
-        DBMS_OUTPUT.PUT_LINE('Ma khach hang: '||cur.ID_KH);
-        DBMS_OUTPUT.PUT_LINE('Ma ban: '||cur.ID_BAN);
-        DBMS_OUTPUT.PUT_LINE('Ngay hoa don: '||TO_CHAR(cur.NgayHD,'dd-MM-YYYY');
-        DBMS_OUTPUT.PUT_LINE('Tien mon an: '||cur.TIENMONAN);
-        DBMS_OUTPUT.PUT_LINE('Tien giam: '||cur.TIENGIAM);
-        DBMS_OUTPUT.PUT_LINE('Tong tien: '||cur.TONGTIEN);
-        DBMS_OUTPUT.PUT_LINE('Trang thai: '||cur.TRANGTHAI);
-        
-        EXCEPTION WHEN NO_DATA_FOUND THEN
-             RAISE_APPLICATION_ERROR(-20000,'Khong co hoa don nao');
+        DBMS_OUTPUT.PUT_LINE('Ma hoa don: ' || cur.ID_HOADON);
+        DBMS_OUTPUT.PUT_LINE('Ma khach hang: ' || cur.ID_KH);
+        DBMS_OUTPUT.PUT_LINE('Ma ban: ' || cur.ID_BAN);
+        DBMS_OUTPUT.PUT_LINE('Ngay hoa don: ' || TO_CHAR(cur.NGAYHD, 'dd-MM-YYYY'));
+        DBMS_OUTPUT.PUT_LINE('Tien mon an: ' || cur.TIENMONAN);
+        DBMS_OUTPUT.PUT_LINE('Tien giam: ' || cur.TIENGIAM);
+        DBMS_OUTPUT.PUT_LINE('Tong tien: ' || cur.TONGTIEN);
+        DBMS_OUTPUT.PUT_LINE('Trang thai: ' || cur.TRANGTHAI);
     END LOOP;
+
+EXCEPTION 
+    WHEN NO_DATA_FOUND THEN
+        RAISE_APPLICATION_ERROR(-20000, 'Khong co hoa don nao');
 END;
 /
+
 -- Procedure liet ke danh sach phieu nhap kho tu ngay A den ngay B
+--CREATE OR REPLACE PROCEDURE DS_PhieuNK_tuAdenB(fromA DATE, toB DATE)
+--IS
+--BEGIN 
+--    FOR cur IN (SELECT ID_NK,ID_NV,NGAYNK,TONGTIEN  
+--    FROM PHIEUNK WHERE NGAYNK BETWEEN fromA AND (toB +1);
+--    )
+--    LOOP
+--        DBMS_OUTPUT.PUT_LINE('Ma nhap kho: '||cur.ID_NK);
+--        DBMS_OUTPUT.PUT_LINE('Ma nhan vien: '||cur.ID_NV);
+--        DBMS_OUTPUT.PUT_LINE('Ngay nhap kho: '||TO_CHAR(cur.NGAYNK,'dd-MM-YYYY');
+--        DBMS_OUTPUT.PUT_LINE('Tong tien: '||cur.TONGTIEN);
+--        
+--        EXCEPTION WHEN NO_DATA_FOUND THEN
+--             RAISE_APPLICATION_ERROR(-20000,'Khong co hoa don nao');
+--    END LOOP;
+--END;
+--/
 CREATE OR REPLACE PROCEDURE DS_PhieuNK_tuAdenB(fromA DATE, toB DATE)
 IS
 BEGIN 
-    FOR cur IN (SELECT ID_NK,ID_NV,NGAYNK,TONGTIEN  
-    FROM PHIEUNK WHERE NGAYNK BETWEEN fromA AND (toB +1);
-    )
+    FOR cur IN (SELECT ID_NK, ID_NV, NGAYNK, TONGTIEN  
+                FROM PHIEUNK 
+                WHERE NGAYNK BETWEEN fromA AND (toB + 1))  -- B? d?u ch?m ph?y
     LOOP
-        DBMS_OUTPUT.PUT_LINE('Ma nhap kho: '||cur.ID_NK);
-        DBMS_OUTPUT.PUT_LINE('Ma nhan vien: '||cur.ID_NV);
-        DBMS_OUTPUT.PUT_LINE('Ngay nhap kho: '||TO_CHAR(cur.NGAYNK,'dd-MM-YYYY');
-        DBMS_OUTPUT.PUT_LINE('Tong tien: '||cur.TONGTIEN);
-        
-        EXCEPTION WHEN NO_DATA_FOUND THEN
-             RAISE_APPLICATION_ERROR(-20000,'Khong co hoa don nao');
+        DBMS_OUTPUT.PUT_LINE('Ma nhap kho: ' || cur.ID_NK);
+        DBMS_OUTPUT.PUT_LINE('Ma nhan vien: ' || cur.ID_NV);
+        DBMS_OUTPUT.PUT_LINE('Ngay nhap kho: ' || TO_CHAR(cur.NGAYNK, 'dd-MM-YYYY'));
+        DBMS_OUTPUT.PUT_LINE('Tong tien: ' || cur.TONGTIEN);
     END LOOP;
+
+    -- Kh?i EXCEPTION n?m ngoài vòng l?p
+    EXCEPTION 
+        WHEN NO_DATA_FOUND THEN
+            RAISE_APPLICATION_ERROR(-20000, 'Khong co hoa don nao');
 END;
 /
 
 -- Procedure liet ke danh sach phieu xuat kho tu ngay A den ngay B
+--CREATE OR REPLACE PROCEDURE DS_PhieuXK_tuAdenB(fromA DATE, toB DATE)
+--IS
+--BEGIN 
+--    FOR cur IN (SELECT ID_XK,ID_NV,NGAYXK
+--    FROM PHIEUXK WHERE NGAYXK BETWEEN fromA AND (toB +1);
+--    )
+--    LOOP
+--        DBMS_OUTPUT.PUT_LINE('Ma xuat kho: '||cur.ID_XK);
+--        DBMS_OUTPUT.PUT_LINE('Ma nhan vien: '||cur.ID_NV);
+--        DBMS_OUTPUT.PUT_LINE('Ngay xuat kho: '||TO_CHAR(cur.NGAYXK,'dd-MM-YYYY');
+--        
+--        EXCEPTION WHEN NO_DATA_FOUND THEN
+--             RAISE_APPLICATION_ERROR(-20000,'Khong co hoa don nao');
+--    END LOOP;
+--END;
+--/
+
 CREATE OR REPLACE PROCEDURE DS_PhieuXK_tuAdenB(fromA DATE, toB DATE)
 IS
 BEGIN 
-    FOR cur IN (SELECT ID_XK,ID_NV,NGAYXK
-    FROM PHIEUXK WHERE NGAYXK BETWEEN fromA AND (toB +1);
-    )
+    FOR cur IN (SELECT ID_XK, ID_NV, NGAYXK
+                FROM PHIEUXK 
+                WHERE NGAYXK BETWEEN fromA AND (toB + 1))  -- B? d?u ch?m ph?y
     LOOP
-        DBMS_OUTPUT.PUT_LINE('Ma xuat kho: '||cur.ID_XK);
-        DBMS_OUTPUT.PUT_LINE('Ma nhan vien: '||cur.ID_NV);
-        DBMS_OUTPUT.PUT_LINE('Ngay xuat kho: '||TO_CHAR(cur.NGAYXK,'dd-MM-YYYY');
-        
-        EXCEPTION WHEN NO_DATA_FOUND THEN
-             RAISE_APPLICATION_ERROR(-20000,'Khong co hoa don nao');
+        DBMS_OUTPUT.PUT_LINE('Ma xuat kho: ' || cur.ID_XK);
+        DBMS_OUTPUT.PUT_LINE('Ma nhan vien: ' || cur.ID_NV);
+        DBMS_OUTPUT.PUT_LINE('Ngay xuat kho: ' || TO_CHAR(cur.NGAYXK, 'dd-MM-YYYY'));
     END LOOP;
+
+    -- Kh?i EXCEPTION n?m ngoài vòng l?p
+    EXCEPTION 
+        WHEN NO_DATA_FOUND THEN
+            RAISE_APPLICATION_ERROR(-20000, 'Khong co hoa don nao');
 END;
 /
+
 -- Procedure xem chi tiet hoa don cua 1 hoa don
 CREATE OR REPLACE PROCEDURE HD_XemCTHD(idHD HOADON.ID_HOADON%TYPE)
 IS
 BEGIN 
-    FOR cur IN (SELECT ID_MONAN,SOLUONG,THANHTIEN
-    FROM CTHD WHERE ID_HOADON=idHD;
-    )
+    FOR cur IN (SELECT ID_MONAN, SOLUONG, THANHTIEN
+                FROM CTHD 
+                WHERE ID_HOADON = idHD)  -- B? d?u ch?m ph?y
     LOOP
-        DBMS_OUTPUT.PUT_LINE('Ma mon an: '||cur.ID_MONAN);
-        DBMS_OUTPUT.PUT_LINE('So luong: '||cur.SOLUONG);
-        DBMS_OUTPUT.PUT_LINE('Thanh tien: '||cur.THANHTIEN);
-        
-        EXCEPTION WHEN NO_DATA_FOUND THEN
-             RAISE_APPLICATION_ERROR(-20000,'Khong co chi tiet hoa don nao');
+        DBMS_OUTPUT.PUT_LINE('Ma mon an: ' || cur.ID_MONAN);
+        DBMS_OUTPUT.PUT_LINE('So luong: ' || cur.SOLUONG);
+        DBMS_OUTPUT.PUT_LINE('Thanh tien: ' || cur.THANHTIEN);
     END LOOP;
+    
+    -- Kh?i EXCEPTION n?m ngoài vòng l?p
+    EXCEPTION 
+        WHEN NO_DATA_FOUND THEN
+            RAISE_APPLICATION_ERROR(-20000, 'Khong co chi tiet hoa don nao');
 END;
 /
+
 -- Procedure giam So Luong cua Voucher di 1 khi KH doi Voucher
 CREATE OR REPLACE PROCEDURE Voucher_GiamSL(code Voucher.Code_Voucher%TYPE)
 IS
@@ -884,19 +1073,37 @@ END;
 /
 
 --Fuction Tinh so luong KHACHANG moi trong thang chi dinh cua nam co it nhat mot hoa don co tri gia tren x vnd
+--CREATE OR REPLACE FUNCTION SL_KH_Moi(thang NUMBER, nam NUMBER, trigiaHD NUMBER)
+--RETURN NUMBER
+--IS 
+--   v_count NUMBER;
+--BEGIN
+--    SELECT COUNT(ID_KH)
+--    INTO v_count;
+--    FROM KHACHHANG
+--    WHERE EXTRACT(MONTH FROM Ngaythamgia)=thang AND EXTRACT(YEAR FROM Ngaythamgia) = nam
+--    AND EXISTS(SELECT *
+--               FROM HOADON 
+--               WHERE HOADON.ID_KH=KHACHHANG.ID_KH AND TONGTIEN>trigiaHD
+--               );
+--    RETURN v_count;          
+--END;
+--/
 CREATE OR REPLACE FUNCTION SL_KH_Moi(thang NUMBER, nam NUMBER, trigiaHD NUMBER)
 RETURN NUMBER
 IS 
    v_count NUMBER;
 BEGIN
     SELECT COUNT(ID_KH)
-    INTO v_count;
+    INTO v_count
     FROM KHACHHANG
-    WHERE EXTRACT(MONTH FROM Ngaythamgia)=thang AND EXTRACT(YEAR FROM Ngaythamgia) = nam
-    AND EXISTS(SELECT *
-               FROM HOADON 
-               WHERE HOADON.ID_KH=KHACHHANG.ID_KH AND TONGTIEN>trigiaHD
-               );
+    WHERE EXTRACT(MONTH FROM Ngaythamgia) = thang 
+    AND EXTRACT(YEAR FROM Ngaythamgia) = nam
+    AND EXISTS (SELECT 1
+                FROM HOADON 
+                WHERE HOADON.ID_KH = KHACHHANG.ID_KH 
+                AND TONGTIEN > trigiaHD);
+    
     RETURN v_count;          
 END;
 /
@@ -916,14 +1123,69 @@ BEGIN
     RETURN Tiengiam;
 END;
 /
---Them data
+
+--Them data set format ngay
 ALTER SESSION SET NLS_DATE_FORMAT = 'dd-MM-YYYY';
+
+
+
+
+/*
+--------------------------------------------------------------------------
+Trong lan dau chay data CHAY L?NH nay khi bi bao loi VI PH?M TRIGGER ; Pk, FK
+TÔ H?P PHÍM NHANH LA Ctr + /
+--------------------------------------------------------------------------
+*/
+
+-- Disable t?t c? các trigger
+--BEGIN
+--   FOR rec IN (SELECT trigger_name FROM user_triggers) LOOP
+--      EXECUTE IMMEDIATE 'ALTER TRIGGER ' || rec.trigger_name || ' DISABLE';
+--   END LOOP;
+--END;
+--/
+
+/* ****************************************
+Pk Fk
+********************
+*/
+--ALTER TABLE BAN DISABLE ALL CONSTRAINTS;
+--ALTER TABLE CTHD DISABLE ALL CONSTRAINTS;
+--ALTER TABLE CTNK DISABLE ALL CONSTRAINTS;
+--ALTER TABLE CTXK DISABLE ALL CONSTRAINTS;
+--ALTER TABLE HOADON DISABLE ALL CONSTRAINTS;
+--ALTER TABLE KHACHHANG DISABLE ALL CONSTRAINTS;
+--ALTER TABLE KHO DISABLE ALL CONSTRAINTS;
+--ALTER TABLE MONAN DISABLE ALL CONSTRAINTS;
+--ALTER TABLE NGUOIDUNG DISABLE ALL CONSTRAINTS;
+--ALTER TABLE NGUYENLIEU DISABLE ALL CONSTRAINTS;
+--ALTER TABLE NHANVIEN DISABLE ALL CONSTRAINTS;
+--ALTER TABLE PHIEUNK DISABLE ALL CONSTRAINTS;
+--ALTER TABLE PHIEUXK DISABLE ALL CONSTRAINTS;
+--ALTER TABLE VOUCHER DISABLE ALL CONSTRAINTS;
+
+
+
+
+/*
 --Them data cho Bang NguoiDung
 --Nhan vien
-INSERT INTO NguoiDung(ID_ND,Email,MatKhau,Trangthai,Vaitro) VALUES (100,'NVThebao@gmail.com','123','Verified','Quan Ly');
-INSERT INTO NguoiDung(ID_ND,Email,MatKhau,Trangthai,Vaitro) VALUES (101,'NVHoangHieu@gmail.com','123','Verified','Nhan Vien');
-INSERT INTO NguoiDung(ID_ND,Email,MatKhau,Trangthai,Vaitro) VALUES (102,'NVAnhDuc@gmail.com','123','Verified','Nhan Vien Kho');
+*/
+INSERT INTO NguoiDung(ID_ND,Email,MatKhau,Trangthai,Vaitro) VALUES (100,'NVHoangHieu@gmail.com','123','Verified','Quan Ly');
+INSERT INTO NguoiDung(ID_ND,Email,MatKhau,Trangthai,Vaitro) VALUES (101,'NVAnhDuc@gmail.com','123','Verified','Quan Ly');
+INSERT INTO NguoiDung(ID_ND,Email,MatKhau,Trangthai,Vaitro) VALUES (102,'NVThebao@gmail.com','123','Verified','Nhan Vien Kho');
 INSERT INTO NguoiDung(ID_ND,Email,MatKhau,Trangthai,Vaitro) VALUES (103,'NVNgocDinh@gmail.com','123','Verified','Nhan Vien');
+INSERT INTO NguoiDung(ID_ND,Email,MatKhau,Trangthai,Vaitro) VALUES (104,'Admin1.panda@gmail.com','123','Verified','Quan Ly');
+
+-- check vai tro
+SELECT search_condition
+FROM all_constraints
+WHERE constraint_name = 'ND_VAITRO_TEN';
+
+-- check bang nguoidung
+SELECT * From NguoiDung;
+
+
 --Khach Hang
 INSERT INTO NguoiDung(ID_ND,Email,MatKhau,Trangthai,Vaitro) VALUES (104,'KHTuanAnh@gmail.com','123','Verified','Khach Hang');
 INSERT INTO NguoiDung(ID_ND,Email,MatKhau,Trangthai,Vaitro) VALUES (105,'KHTanHieu@gmail.com','123','Verified','Khach Hang');
@@ -962,9 +1224,10 @@ INSERT INTO KhachHang(ID_KH,TenKH,Ngaythamgia,ID_ND) VALUES (106,'Hoang Minh Qua
 INSERT INTO KhachHang(ID_KH,TenKH,Ngaythamgia,ID_ND) VALUES (107,'Nguyen Thanh Hang','12/05/2024',111);
 INSERT INTO KhachHang(ID_KH,TenKH,Ngaythamgia,ID_ND) VALUES (108,'Nguyen Ngoc Thanh Nhan','11/05/2024',112);
 INSERT INTO KhachHang(ID_KH,TenKH,Ngaythamgia,ID_ND) VALUES (109,'Hoang Thi Phuc Nguyen','12/05/2024',113);
-
+/*
 --Them data cho bang MonAn
 --Ti
+*/
 insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(1,'DUI CUU NUONG XE NHO', 250000,'Ti','Dang kinh doanh');
 insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(2,'BE SUON CUU NUONG GIAY BAC MONG CO', 230000,'Ti','Dang kinh doanh');
 insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(3,'DUI CUU NUONG TRUNG DONG', 350000,'Ti','Dang kinh doanh');
@@ -1077,8 +1340,10 @@ insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(87,'KARIN:Sashim
 insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(88,'KEIKO:Sashimi Ca Hoi', 199000,'Hoi','Dang kinh doanh');
 insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(89,'CHIYO:Sashimi Bung Ca Hoi', 219000,'Hoi','Dang kinh doanh');
 
+/*
 --Them data cho bang Ban
 --Tang 1
+*/
 insert into Ban(ID_Ban,TenBan,Vitri,Trangthai) values(100,'Ban T1.1','Tang 1','Con trong');
 insert into Ban(ID_Ban,TenBan,Vitri,Trangthai) values(101,'Ban T1.2','Tang 1','Con trong');
 insert into Ban(ID_Ban,TenBan,Vitri,Trangthai) values(102,'Ban T1.3','Tang 1','Con trong');
@@ -1133,6 +1398,7 @@ insert into Voucher(Code_Voucher, Phantram,LoaiMA,SoLuong,Diem) values ('WHLm','
 insert into Voucher(Code_Voucher, Phantram,LoaiMA,SoLuong,Diem) values ('GTsC','20% off for Thin Menu',20,'Thin',0,200);
 
 
+
 --Them data cho bang HoaDon
 INSERT INTO HoaDon(ID_HoaDon,ID_KH,ID_Ban,NgayHD,TienMonAn,TienGiam,Trangthai) VALUES (101,100,100,'10-1-2024',0,0,'Chua thanh toan');
 INSERT INTO HoaDon(ID_HoaDon,ID_KH,ID_Ban,NgayHD,TienMonAn,TienGiam,Trangthai) VALUES (102,104,102,'15-1-2024',0,0,'Chua thanh toan');
@@ -1156,6 +1422,8 @@ INSERT INTO HoaDon(ID_HoaDon,ID_KH,ID_Ban,NgayHD,TienMonAn,TienGiam,Trangthai) V
 INSERT INTO HoaDon(ID_HoaDon,ID_KH,ID_Ban,NgayHD,TienMonAn,TienGiam,Trangthai) VALUES (120,104,106,'10-4-2024',0,0,'Chua thanh toan');
 INSERT INTO HoaDon(ID_HoaDon,ID_KH,ID_Ban,NgayHD,TienMonAn,TienGiam,Trangthai) VALUES (121,105,106,'12-4-2024',0,0,'Chua thanh toan');
 INSERT INTO HoaDon(ID_HoaDon,ID_KH,ID_Ban,NgayHD,TienMonAn,TienGiam,Trangthai) VALUES (122,107,106,'12-5-2024',0,0,'Chua thanh toan');
+
+
 
 --Them data cho CTHD
 INSERT INTO CTHD(ID_HoaDon,ID_MonAn,SoLuong) VALUES (101,1,2);
@@ -1317,5 +1585,78 @@ INSERT INTO CTXK(ID_XK,ID_NL,SoLuong) VALUES (109,112,5);
 INSERT INTO CTXK(ID_XK,ID_NL,SoLuong) VALUES (110,113,5);
 INSERT INTO CTXK(ID_XK,ID_NL,SoLuong) VALUES (110,114,5);
 
+-- them du lieu cho voucher
+INSERT INTO Voucher (CODE_VOUCHER, MOTA, PHANTRAM, LOAIMA, SOLUONG, DIEM) VALUES ('VOUCHER10', 'Gi?m 10% cho t?t c? món ?n', 10, 'All', 100, 500);
+INSERT INTO Voucher (CODE_VOUCHER, MOTA, PHANTRAM, LOAIMA, SOLUONG, DIEM) VALUES ('VOUCHER25', 'Gi?m 25% cho món tráng mi?ng', 25, 'Dessert', 50, 300);
+INSERT INTO Voucher (CODE_VOUCHER, MOTA, PHANTRAM, LOAIMA, SOLUONG, DIEM) VALUES ('VOUCHER50', 'Gi?m 50% cho món chính', 50, 'Main', 30, 1000);
+INSERT INTO Voucher (CODE_VOUCHER, MOTA, PHANTRAM, LOAIMA, SOLUONG, DIEM) VALUES ('VOUCHER15', 'Gi?m 15% cho th?c u?ng', 15, 'Drink', 150, 200);
+INSERT INTO Voucher (CODE_VOUCHER, MOTA, PHANTRAM, LOAIMA, SOLUONG, DIEM) VALUES ('VOUCHER100', 'Gi?m 100% cho t?ng ??n hàng', 100, 'All', 10, 2000);
 
 
+/* Bat lai cac chuc nang trigger pk fk  */
+-- Enable l?i t?t c? các trigger
+
+--BEGIN
+--   FOR rec IN (SELECT trigger_name FROM user_triggers) LOOP
+--      EXECUTE IMMEDIATE 'ALTER TRIGGER ' || rec.trigger_name || ' ENABLE';
+--   END LOOP;
+--END;
+--/
+--
+--ALTER TABLE BAN ENABLE ALL CONSTRAINTS;
+--ALTER TABLE CTHD ENABLE ALL CONSTRAINTS;
+--ALTER TABLE CTNK ENABLE ALL CONSTRAINTS;
+--ALTER TABLE CTXK ENABLE ALL CONSTRAINTS;
+--ALTER TABLE HOADON ENABLE ALL CONSTRAINTS;
+--ALTER TABLE KHACHHANG ENABLE ALL CONSTRAINTS;
+--ALTER TABLE KHO ENABLE ALL CONSTRAINTS;
+--ALTER TABLE MONAN ENABLE ALL CONSTRAINTS;
+--ALTER TABLE NGUOIDUNG ENABLE ALL CONSTRAINTS;
+--ALTER TABLE NGUYENLIEU ENABLE ALL CONSTRAINTS;
+--ALTER TABLE NHANVIEN ENABLE ALL CONSTRAINTS;
+--ALTER TABLE PHIEUNK ENABLE ALL CONSTRAINTS;
+--ALTER TABLE PHIEUXK ENABLE ALL CONSTRAINTS;
+--ALTER TABLE VOUCHER ENABLE ALL CONSTRAINTS;
+
+
+-- Ki?m tra b?ng BAN
+SELECT * FROM BAN;
+
+-- Ki?m tra b?ng CTHD
+SELECT * FROM CTHD;
+
+-- Ki?m tra b?ng CTNK
+SELECT * FROM CTNK;
+
+-- Ki?m tra b?ng CTXK
+SELECT * FROM CTXK;
+
+-- Ki?m tra b?ng HOADON
+SELECT * FROM HOADON;
+
+-- Ki?m tra b?ng KHACHHANG
+SELECT * FROM KHACHHANG;
+
+-- Ki?m tra b?ng KHO
+SELECT * FROM KHO;
+
+-- Ki?m tra b?ng MONAN
+SELECT * FROM MONAN;
+
+-- Ki?m tra b?ng NGUOIDUNG
+SELECT * FROM NGUOIDUNG;
+
+-- Ki?m tra b?ng NGUYENLIEU
+SELECT * FROM NGUYENLIEU;
+
+-- Ki?m tra b?ng NHANVIEN
+SELECT * FROM NHANVIEN;
+
+-- Ki?m tra b?ng PHIEUNK
+SELECT * FROM PHIEUNK;
+
+-- Ki?m tra b?ng PHIEUXK
+SELECT * FROM PHIEUXK;
+
+-- Ki?m tra b?ng VOUCHER
+SELECT * FROM VOUCHER;
