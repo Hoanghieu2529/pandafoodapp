@@ -21,19 +21,19 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" attributes="0">
+          <Group type="102" alignment="1" attributes="0">
               <EmptySpace max="32767" attributes="0"/>
               <Component id="panelRound1" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="1" attributes="0">
-              <EmptySpace max="32767" attributes="0"/>
-              <Component id="panelRound1" min="-2" max="-2" attributes="0"/>
               <EmptySpace pref="7" max="32767" attributes="0"/>
+              <Component id="panelRound1" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -52,35 +52,24 @@
               <Group type="102" alignment="1" attributes="0">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
+                          <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" alignment="0" attributes="0">
-                                  <EmptySpace min="-2" pref="236" max="-2" attributes="0"/>
-                                  <Component id="header" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="wel" min="-2" max="-2" attributes="0"/>
-                                      <Component id="jScrollPane2" min="-2" pref="550" max="-2" attributes="0"/>
-                                      <Component id="footer" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="jScrollPane3" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  </Group>
+                              <Component id="footer" alignment="0" min="-2" pref="540" max="-2" attributes="0"/>
+                              <Component id="jScrollPane2" alignment="0" min="-2" pref="558" max="-2" attributes="0"/>
+                              <Group type="103" alignment="0" groupAlignment="1" attributes="0">
+                                  <Component id="header1" min="-2" pref="533" max="-2" attributes="0"/>
+                                  <Component id="wel" min="-2" pref="550" max="-2" attributes="0"/>
                               </Group>
                           </Group>
-                          <EmptySpace pref="30" max="32767" attributes="0"/>
+                          <EmptySpace pref="27" max="32767" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="1" attributes="0">
                           <EmptySpace max="32767" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" alignment="1" attributes="0">
-                                  <Component id="jSeparator1" min="-2" pref="470" max="-2" attributes="0"/>
-                                  <EmptySpace min="-2" pref="75" max="-2" attributes="0"/>
-                              </Group>
-                              <Group type="102" alignment="1" attributes="0">
-                                  <Component id="header1" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace min="-2" pref="116" max="-2" attributes="0"/>
-                              </Group>
+                          <Group type="103" groupAlignment="1" attributes="0">
+                              <Component id="header" min="-2" pref="479" max="-2" attributes="0"/>
+                              <Component id="jSeparator1" min="-2" pref="470" max="-2" attributes="0"/>
                           </Group>
+                          <EmptySpace min="-2" pref="75" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <Component id="img" min="-2" pref="494" max="-2" attributes="0"/>
@@ -91,20 +80,18 @@
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" attributes="0">
-                  <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
-                  <Component id="header" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
+                  <Component id="header" min="-2" pref="49" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
                   <Component id="jSeparator1" min="-2" pref="1" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="header1" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="wel" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Component id="jScrollPane2" min="-2" pref="419" max="-2" attributes="0"/>
-                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <Component id="jScrollPane2" min="-2" pref="459" max="-2" attributes="0"/>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="footer" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jScrollPane3" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
               <Component id="img" alignment="1" pref="756" max="32767" attributes="0"/>
@@ -122,11 +109,12 @@
         <Component class="javax.swing.JLabel" name="header">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Papyrus" size="20" style="1"/>
+              <Font name="SansSerif" size="20" style="1"/>
             </Property>
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="7b" green="5b" red="6c" type="rgb"/>
+              <Color blue="d" green="5" red="93" type="rgb"/>
             </Property>
+            <Property name="horizontalAlignment" type="int" value="0"/>
             <Property name="text" type="java.lang.String" value="ABOUT US"/>
           </Properties>
         </Component>
@@ -139,7 +127,7 @@
               <Color blue="3f" green="3f" red="3f" type="rgb"/>
             </Property>
             <Property name="horizontalAlignment" type="int" value="0"/>
-            <Property name="text" type="java.lang.String" value="&lt;html&gt;  Welcome to  &lt;i style=&quot;color:rgb(108,91,123);font-size:16px;&quot;&gt;  ROYAL THEDREAMERS&lt;i&gt; &lt;/html&gt;"/>
+            <Property name="text" type="java.lang.String" value="&lt;html&gt;      &lt;i style=&quot;color:#93050D;font-size:16px;&quot;&gt;WELCOME TO PANDA FOOD&lt;/i&gt; &lt;/html&gt; "/>
           </Properties>
         </Component>
         <Container class="javax.swing.JScrollPane" name="jScrollPane2">
@@ -171,7 +159,7 @@
                 </Property>
                 <Property name="lineWrap" type="boolean" value="true"/>
                 <Property name="rows" type="int" value="5"/>
-                <Property name="text" type="java.lang.String" value="Nh&#xe0; h&#xe0;ng c&#x1ee7;a ch&#xfa;ng t&#xf4;i l&#xe0; bi&#x1ec3;u t&#x1b0;&#x1ee3;ng c&#x1ee7;a s&#x1ef1; thanh l&#x1ecb;ch v&#xe0; sang tr&#x1ecd;ng. V&#x1edb;i ki&#x1ebf;n tr&#xfa;c &#x111;&#x1eb9;p m&#x1eaf;t, n&#x1ed9;i th&#x1ea5;t &#x111;&#x1ead;m ch&#x1ea5;t c&#x1ed5; &#x111;i&#x1ec3;n v&#xe0; s&#x1ef1; ch&#xfa; tr&#x1ecd;ng &#x111;&#x1ebf;n t&#x1eeb;ng chi ti&#x1ebf;t nh&#x1ecf;, ch&#xfa;ng t&#xf4;i t&#x1ea1;o ra m&#x1ed9;t kh&#xf4;ng gian l&#x1ecb;ch s&#x1ef1; v&#xe0; &#x111;&#x1eb3;ng c&#x1ea5;p.&#xa;&#xa;&#x110;&#x1ed9;i ng&#x169; &#x111;&#x1ea7;u b&#x1ebf;p ch&#xfa;ng t&#xf4;i l&#xe0; nh&#x1eef;ng ngh&#x1ec7; nh&#xe2;n &#x1ea9;m th&#x1ef1;c, t&#x1ea1;o ra nh&#x1eef;ng t&#xe1;c ph&#x1ea9;m ngh&#x1ec7; thu&#x1ead;t tr&#xea;n &#x111;&#x129;a. V&#x1edb;i s&#x1ef1; kh&#xe9;o l&#xe9;o trong vi&#x1ec7;c k&#x1ebf;t h&#x1ee3;p c&#xe1;c h&#x1b0;&#x1a1;ng v&#x1ecb;, ch&#xfa;ng t&#xf4;i mang &#x111;&#x1ebf;n cho th&#x1ef1;c kh&#xe1;ch nh&#x1eef;ng tr&#x1ea3;i nghi&#x1ec7;m &#x1ea9;m th&#x1ef1;c &#x111;&#x1ed9;c &#x111;&#xe1;o v&#xe0; tinh t&#x1ebf;. Ch&#xfa;ng t&#xf4;i s&#x1eed; d&#x1ee5;ng c&#xe1;c nguy&#xea;n li&#x1ec7;u t&#x1b0;&#x1a1;i ngon v&#xe0; cao c&#x1ea5;p nh&#x1ea5;t, k&#x1ebf;t h&#x1ee3;p v&#x1edb;i s&#x1ef1; s&#xe1;ng t&#x1ea1;o v&#xe0; k&#x1ef9; thu&#x1ead;t ch&#x1ebf; bi&#x1ebf;n tinh t&#x1ebf; &#x111;&#x1ec3; t&#x1ea1;o n&#xea;n nh&#x1eef;ng m&#xf3;n &#x103;n truy&#x1ec1;n th&#x1ed1;ng v&#x1edb;i m&#x1ed9;t phong c&#xe1;ch hi&#x1ec7;n &#x111;&#x1ea1;i v&#xe0; &#x111;&#x1ed9;c &#x111;&#xe1;o.&#xa;&#xa;Nh&#xe0; h&#xe0;ng c&#x1ee7;a ch&#xfa;ng t&#xf4;i l&#xe0; m&#x1ed9;t n&#x1a1;i l&#xfd; t&#x1b0;&#x1edf;ng &#x111;&#x1ec3; t&#x1ee5; h&#x1ecd;p v&#x1edb;i gia &#x111;&#xec;nh v&#xe0; b&#x1ea1;n b&#xe8;, n&#x1a1;i m&#xe0; t&#x1eeb;ng chi ti&#x1ebf;t &#x111;&#x1ec1;u &#x111;&#x1b0;&#x1ee3;c ch&#x103;m ch&#xfa;t t&#x1ec9; m&#x1ec9;. Kh&#xf4;ng gian ti&#x1ebf;p kh&#xe1;ch &#x111;&#x1b0;&#x1ee3;c thi&#x1ebf;t k&#x1ebf; &#x111;&#x1ec3; t&#x1ea1;o ra s&#x1ef1; ri&#xea;ng t&#x1b0; v&#xe0; tho&#x1ea3;i m&#xe1;i, v&#x1edb;i &#xe1;nh s&#xe1;ng d&#x1ecb;u nh&#x1eb9; v&#xe0; kh&#xf4;ng gian y&#xea;n t&#x129;nh, t&#x1ea1;o &#x111;i&#x1ec1;u ki&#x1ec7;n l&#xfd; t&#x1b0;&#x1edf;ng &#x111;&#x1ec3; th&#x1b0;&#x1edf;ng th&#x1ee9;c b&#x1eef;a &#x103;n th&#x1b0;&#x1ee3;ng h&#x1ea1;ng.&#xa;&#xa;&#x110;&#x1ed9;i ng&#x169; nh&#xe2;n vi&#xea;n ph&#x1ee5;c v&#x1ee5; c&#x1ee7;a ch&#xfa;ng t&#xf4;i, v&#x1edb;i s&#x1ef1; chuy&#xea;n nghi&#x1ec7;p v&#xe0; t&#x1ead;n t&#xe2;m, s&#x1ebd; &#x111;&#x1ea3;m b&#x1ea3;o r&#x1eb1;ng m&#x1ed7;i kh&#xe1;ch h&#xe0;ng &#x111;&#x1b0;&#x1ee3;c &#x111;&#x1ed1;i x&#x1eed; v&#x1edb;i s&#x1ef1; chu &#x111;&#xe1;o v&#xe0; s&#x1ef1; ph&#x1ee5;c v&#x1ee5; t&#x1ead;n t&#xe2;m. Ch&#xfa;ng t&#xf4;i s&#x1ebd; t&#x1ea1;o ra nh&#x1eef;ng tr&#x1ea3;i nghi&#x1ec7;m &#x1ea9;m th&#x1ef1;c &#x111;&#xe1;ng nh&#x1edb;, v&#x1b0;&#x1ee3;t xa mong &#x111;&#x1ee3;i c&#x1ee7;a qu&#xfd; kh&#xe1;ch.&#xa;&#xa;H&#xe3;y &#x111;&#x1ebf;n v&#xe0; kh&#xe1;m ph&#xe1; kh&#xf4;ng gian thanh l&#x1ecb;ch, tinh t&#x1ebf; v&#xe0; sang tr&#x1ecd;ng c&#x1ee7;a nh&#xe0; h&#xe0;ng ch&#xfa;ng t&#xf4;i. Ch&#xfa;ng t&#xf4;i cam k&#x1ebf;t &#x111;em &#x111;&#x1ebf;n cho qu&#xfd; kh&#xe1;ch m&#x1ed9;t tr&#x1ea3;i nghi&#x1ec7;m &#x1ea9;m th&#x1ef1;c &#x111;&#x1eb3;ng c&#x1ea5;p v&#xe0; kh&#xf4;ng gian l&#x1ecb;ch s&#x1ef1;, &#x111;&#x1ec3; b&#x1ea1;n c&#xf3; th&#x1ec3; th&#x1b0;&#x1edf;ng th&#x1ee9;c m&#x1ed9;t b&#x1eef;a &#x103;n ngon v&#xe0; co&#x301; &#x111;&#x1b0;&#x1a1;&#x323;c nh&#x1eef;ng k&#x1ef7; ni&#x1ec7;m ch&#x1b0;a t&#x1b0;&#x300;ng co&#x301;."/>
+                <Property name="text" type="java.lang.String" value="B&#x1b0;&#x1edb;c v&#xe0;o nh&#xe0; h&#xe0;ng c&#x1ee7;a ch&#xfa;ng t&#xf4;i, b&#x1ea1;n s&#x1ebd; ngay l&#x1ead;p t&#x1ee9;c b&#x1ecb; cu&#x1ed1;n h&#xfa;t b&#x1edf;i kh&#xf4;ng gian thanh l&#x1ecb;ch v&#xe0; sang tr&#x1ecd;ng. V&#x1edb;i thi&#x1ebf;t k&#x1ebf; ki&#x1ebf;n tr&#xfa;c tinh t&#x1ebf;, t&#x1eeb;ng chi ti&#x1ebf;t n&#x1ed9;i th&#x1ea5;t &#x111;&#x1b0;&#x1ee3;c ch&#x103;m ch&#xfa;t k&#x1ef9; l&#x1b0;&#x1ee1;ng, mang &#x111;&#x1ead;m phong c&#xe1;ch c&#x1ed5; &#x111;i&#x1ec3;n nh&#x1b0;ng kh&#xf4;ng k&#xe9;m ph&#x1ea7;n hi&#x1ec7;n &#x111;&#x1ea1;i. &#x110;&#xf3; l&#xe0; s&#x1ef1; k&#x1ebf;t h&#x1ee3;p tuy&#x1ec7;t v&#x1edd;i gi&#x1eef;a ngh&#x1ec7; thu&#x1ead;t v&#xe0; ki&#x1ebf;n tr&#xfa;c, t&#x1ea1;o n&#xea;n m&#x1ed9;t kh&#xf4;ng gian &#x111;&#x1eb3;ng c&#x1ea5;p v&#xe0; l&#x1ecb;ch l&#xe3;m.&#xa;&#xa;&#x110;&#x1ed9;i ng&#x169; &#x111;&#x1ea7;u b&#x1ebf;p c&#x1ee7;a ch&#xfa;ng t&#xf4;i kh&#xf4;ng ch&#x1ec9; l&#xe0; nh&#x1eef;ng ng&#x1b0;&#x1edd;i n&#x1ea5;u &#x103;n, m&#xe0; l&#xe0; nh&#x1eef;ng ngh&#x1ec7; nh&#xe2;n th&#x1ef1;c s&#x1ef1;. H&#x1ecd; t&#x1ea1;o ra nh&#x1eef;ng m&#xf3;n &#x103;n nh&#x1b0; nh&#x1eef;ng t&#xe1;c ph&#x1ea9;m ngh&#x1ec7; thu&#x1ead;t, k&#x1ebf;t h&#x1ee3;p c&#xe1;c h&#x1b0;&#x1a1;ng v&#x1ecb; m&#x1ed9;t c&#xe1;ch kh&#xe9;o l&#xe9;o v&#xe0; tinh t&#x1ebf; &#x111;&#x1ec3; mang &#x111;&#x1ebf;n cho th&#x1ef1;c kh&#xe1;ch tr&#x1ea3;i nghi&#x1ec7;m &#x1ea9;m th&#x1ef1;c kh&#xf3; qu&#xea;n. Nguy&#xea;n li&#x1ec7;u ch&#xfa;ng t&#xf4;i s&#x1eed; d&#x1ee5;ng lu&#xf4;n t&#x1b0;&#x1a1;i ngon v&#xe0; cao c&#x1ea5;p, k&#x1ebf;t h&#x1ee3;p v&#x1edb;i s&#x1ef1; s&#xe1;ng t&#x1ea1;o v&#xe0; k&#x1ef9; thu&#x1ead;t ch&#x1ebf; bi&#x1ebf;n &#x111;&#x1ec9;nh cao, &#x111;&#x1ec3; mang &#x111;&#x1ebf;n nh&#x1eef;ng m&#xf3;n &#x103;n truy&#x1ec1;n th&#x1ed1;ng v&#x1edb;i phong c&#xe1;ch hi&#x1ec7;n &#x111;&#x1ea1;i &#x111;&#x1ed9;c &#x111;&#xe1;o.&#xa;&#xa;Nh&#xe0; h&#xe0;ng ch&#xfa;ng t&#xf4;i l&#xe0; n&#x1a1;i l&#xfd; t&#x1b0;&#x1edf;ng &#x111;&#x1ec3; b&#x1ea1;n c&#xf9;ng gia &#x111;&#xec;nh v&#xe0; b&#x1ea1;n b&#xe8; t&#x1ee5; h&#x1ecd;p. Ch&#xfa;ng t&#xf4;i t&#x1ea1;o ra m&#x1ed9;t kh&#xf4;ng gian ri&#xea;ng t&#x1b0; v&#xe0; tho&#x1ea3;i m&#xe1;i, v&#x1edb;i &#xe1;nh s&#xe1;ng d&#x1ecb;u nh&#x1eb9; v&#xe0; kh&#xf4;ng gian y&#xea;n t&#x129;nh, gi&#xfa;p th&#x1ef1;c kh&#xe1;ch c&#xf3; th&#x1ec3; t&#x1ead;n h&#x1b0;&#x1edf;ng nh&#x1eef;ng b&#x1eef;a &#x103;n th&#x1b0;&#x1ee3;ng h&#x1ea1;ng trong kh&#xf4;ng gian &#x1ea5;m c&#xfa;ng.&#xa;&#xa;&#x110;&#x1ed9;i ng&#x169; nh&#xe2;n vi&#xea;n ph&#x1ee5;c v&#x1ee5; chuy&#xea;n nghi&#x1ec7;p v&#xe0; t&#x1ead;n t&#xe2;m c&#x1ee7;a ch&#xfa;ng t&#xf4;i lu&#xf4;n s&#x1eb5;n s&#xe0;ng ph&#x1ee5;c v&#x1ee5;, &#x111;&#x1ea3;m b&#x1ea3;o m&#x1ed7;i kh&#xe1;ch h&#xe0;ng &#x111;&#x1ec1;u &#x111;&#x1b0;&#x1ee3;c ch&#x103;m s&#xf3;c chu &#x111;&#xe1;o. Ch&#xfa;ng t&#xf4;i kh&#xf4;ng ch&#x1ec9; ph&#x1ee5;c v&#x1ee5; th&#x1ee9;c &#x103;n, m&#xe0; c&#xf2;n mang &#x111;&#x1ebf;n nh&#x1eef;ng tr&#x1ea3;i nghi&#x1ec7;m &#x1ea9;m th&#x1ef1;c v&#x1b0;&#x1ee3;t ngo&#xe0;i mong &#x111;&#x1ee3;i.&#xa;&#xa;H&#xe3;y &#x111;&#x1ebf;n v&#xe0; tr&#x1ea3;i nghi&#x1ec7;m kh&#xf4;ng gian thanh l&#x1ecb;ch v&#xe0; tinh t&#x1ebf; c&#x1ee7;a nh&#xe0; h&#xe0;ng ch&#xfa;ng t&#xf4;i. Ch&#xfa;ng t&#xf4;i cam k&#x1ebf;t mang &#x111;&#x1ebf;n cho qu&#xfd; kh&#xe1;ch tr&#x1ea3;i nghi&#x1ec7;m &#x1ea9;m th&#x1ef1;c &#x111;&#x1eb3;ng c&#x1ea5;p, t&#x1ea1;o n&#xea;n nh&#x1eef;ng k&#x1ef7; ni&#x1ec7;m &#x111;&#xe1;ng nh&#x1edb; qua t&#x1eeb;ng b&#x1eef;a &#x103;n."/>
                 <Property name="wrapStyleWord" type="boolean" value="true"/>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                   <Border info="null"/>
@@ -200,46 +188,10 @@
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="3f" green="3f" red="3f" type="rgb"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Since : 2023 - Co-founder by The Dreamers Team&#xa;"/>
+            <Property name="horizontalAlignment" type="int" value="0"/>
+            <Property name="text" type="java.lang.String" value="Since : 2024 - Co-founder by Panda Team"/>
           </Properties>
         </Component>
-        <Container class="javax.swing.JScrollPane" name="jScrollPane3">
-          <Properties>
-            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="ff" green="ff" red="ff" type="rgb"/>
-            </Property>
-            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-              <Border info="null"/>
-            </Property>
-            <Property name="horizontalScrollBarPolicy" type="int" value="31"/>
-            <Property name="verticalScrollBarPolicy" type="int" value="21"/>
-            <Property name="focusable" type="boolean" value="false"/>
-          </Properties>
-          <AuxValues>
-            <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
-          </AuxValues>
-
-          <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
-          <SubComponents>
-            <Component class="javax.swing.JTextArea" name="listMember">
-              <Properties>
-                <Property name="columns" type="int" value="20"/>
-                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Segoe UI" size="12" style="2"/>
-                </Property>
-                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="59" green="59" red="59" type="rgb"/>
-                </Property>
-                <Property name="rows" type="int" value="5"/>
-                <Property name="text" type="java.lang.String" value="Team Members :&#xa;L&#xea; Thi&#x323; A&#x301;nh H&#xf4;&#x300;ng - Product Owner&#xa;Nguy&#xea;&#x303;n Hoa&#x300;ng Vi&#xea;&#x323;t - Scrum Master&#xa;Nguy&#xea;&#x303;n Hoa&#x300;ng Phu&#x301;c - Developer&#xa;H&#xf4;&#x300; Quang &#x110;i&#x309;nh -  Developer"/>
-                <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-                  <Border info="null"/>
-                </Property>
-                <Property name="focusable" type="boolean" value="false"/>
-              </Properties>
-            </Component>
-          </SubComponents>
-        </Container>
         <Component class="javax.swing.JSeparator" name="jSeparator1">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
@@ -252,9 +204,7 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI" size="16" style="2"/>
             </Property>
-            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="59" green="59" red="59" type="rgb"/>
-            </Property>
+            <Property name="horizontalAlignment" type="int" value="0"/>
             <Property name="text" type="java.lang.String" value="Tastes like a bit of heaven on your tongue."/>
             <Property name="toolTipText" type="java.lang.String" value=""/>
           </Properties>

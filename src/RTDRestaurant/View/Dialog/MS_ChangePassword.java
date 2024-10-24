@@ -125,7 +125,7 @@ public class MS_ChangePassword extends javax.swing.JDialog {
         panelRound1.setOpaque(true);
 
         lbTitle.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        lbTitle.setForeground(new java.awt.Color(108, 91, 123));
+        lbTitle.setForeground(new java.awt.Color(147, 5, 13));
         lbTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lbTitle.setText("ĐỔI MẬT KHẨU TÀI KHOẢN");
 

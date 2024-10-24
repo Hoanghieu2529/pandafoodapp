@@ -60,7 +60,6 @@ public class MS_Success extends javax.swing.JDialog {
         panelRound1 = new RTDRestaurant.View.Swing.PanelRound();
         lbTitle = new javax.swing.JLabel();
         lbIcon = new javax.swing.JLabel();
-        cmdClose = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         txtMessage = new javax.swing.JTextArea();
 
@@ -79,13 +78,6 @@ public class MS_Success extends javax.swing.JDialog {
         lbTitle.setText("XUẤT FILE THÀNH CÔNG !!!");
 
         lbIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/test.png"))); // NOI18N
-
-        cmdClose.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/close (2).png"))); // NOI18N
-        cmdClose.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                cmdCloseMouseClicked(evt);
-            }
-        });
 
         jScrollPane1.setBorder(null);
         jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
@@ -108,9 +100,7 @@ public class MS_Success extends javax.swing.JDialog {
             .addGroup(panelRound1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(lbIcon)
-                .addGap(211, 211, 211)
-                .addComponent(cmdClose)
-                .addContainerGap())
+                .addGap(241, 241, 241))
             .addGroup(panelRound1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -122,9 +112,7 @@ public class MS_Success extends javax.swing.JDialog {
             panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelRound1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(cmdClose)
-                    .addComponent(lbIcon))
+                .addComponent(lbIcon)
                 .addGap(18, 18, 18)
                 .addComponent(lbTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -148,10 +136,6 @@ public class MS_Success extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void cmdCloseMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cmdCloseMouseClicked
-        closeMenu();
-    }//GEN-LAST:event_cmdCloseMouseClicked
-
     private void closeMenu() {
         if (animator.isRunning()) {
             animator.stop();
@@ -171,7 +155,6 @@ public class MS_Success extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel cmdClose;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lbIcon;
     private javax.swing.JLabel lbTitle;

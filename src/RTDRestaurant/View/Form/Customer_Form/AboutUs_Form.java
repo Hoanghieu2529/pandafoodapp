@@ -33,8 +33,6 @@ public class AboutUs_Form extends javax.swing.JPanel {
         jScrollPane2 = new javax.swing.JScrollPane();
         txt = new javax.swing.JTextArea();
         footer = new javax.swing.JLabel();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        listMember = new javax.swing.JTextArea();
         jSeparator1 = new javax.swing.JSeparator();
         header1 = new javax.swing.JLabel();
 
@@ -44,14 +42,15 @@ public class AboutUs_Form extends javax.swing.JPanel {
 
         img.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/aboutus.jpg"))); // NOI18N
 
-        header.setFont(new java.awt.Font("Papyrus", 1, 20)); // NOI18N
-        header.setForeground(new java.awt.Color(108, 91, 123));
+        header.setFont(new java.awt.Font("SansSerif", 1, 20)); // NOI18N
+        header.setForeground(new java.awt.Color(147, 5, 13));
+        header.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         header.setText("ABOUT US");
 
         wel.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         wel.setForeground(new java.awt.Color(63, 63, 63));
         wel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        wel.setText("<html>  Welcome to  <i style=\"color:rgb(108,91,123);font-size:16px;\">  ROYAL THEDREAMERS<i> </html>");
+        wel.setText("<html>      <i style=\"color:#93050D;font-size:16px;\">WELCOME TO PANDA FOOD</i> </html> ");
 
         jScrollPane2.setBorder(null);
         jScrollPane2.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
@@ -64,7 +63,7 @@ public class AboutUs_Form extends javax.swing.JPanel {
         txt.setForeground(new java.awt.Color(89, 89, 89));
         txt.setLineWrap(true);
         txt.setRows(5);
-        txt.setText("Nhà hàng của chúng tôi là biểu tượng của sự thanh lịch và sang trọng. Với kiến trúc đẹp mắt, nội thất đậm chất cổ điển và sự chú trọng đến từng chi tiết nhỏ, chúng tôi tạo ra một không gian lịch sự và đẳng cấp.\n\nĐội ngũ đầu bếp chúng tôi là những nghệ nhân ẩm thực, tạo ra những tác phẩm nghệ thuật trên đĩa. Với sự khéo léo trong việc kết hợp các hương vị, chúng tôi mang đến cho thực khách những trải nghiệm ẩm thực độc đáo và tinh tế. Chúng tôi sử dụng các nguyên liệu tươi ngon và cao cấp nhất, kết hợp với sự sáng tạo và kỹ thuật chế biến tinh tế để tạo nên những món ăn truyền thống với một phong cách hiện đại và độc đáo.\n\nNhà hàng của chúng tôi là một nơi lý tưởng để tụ họp với gia đình và bạn bè, nơi mà từng chi tiết đều được chăm chút tỉ mỉ. Không gian tiếp khách được thiết kế để tạo ra sự riêng tư và thoải mái, với ánh sáng dịu nhẹ và không gian yên tĩnh, tạo điều kiện lý tưởng để thưởng thức bữa ăn thượng hạng.\n\nĐội ngũ nhân viên phục vụ của chúng tôi, với sự chuyên nghiệp và tận tâm, sẽ đảm bảo rằng mỗi khách hàng được đối xử với sự chu đáo và sự phục vụ tận tâm. Chúng tôi sẽ tạo ra những trải nghiệm ẩm thực đáng nhớ, vượt xa mong đợi của quý khách.\n\nHãy đến và khám phá không gian thanh lịch, tinh tế và sang trọng của nhà hàng chúng tôi. Chúng tôi cam kết đem đến cho quý khách một trải nghiệm ẩm thực đẳng cấp và không gian lịch sự, để bạn có thể thưởng thức một bữa ăn ngon và có được những kỷ niệm chưa từng có.");
+        txt.setText("Bước vào nhà hàng của chúng tôi, bạn sẽ ngay lập tức bị cuốn hút bởi không gian thanh lịch và sang trọng. Với thiết kế kiến trúc tinh tế, từng chi tiết nội thất được chăm chút kỹ lưỡng, mang đậm phong cách cổ điển nhưng không kém phần hiện đại. Đó là sự kết hợp tuyệt vời giữa nghệ thuật và kiến trúc, tạo nên một không gian đẳng cấp và lịch lãm.\n\nĐội ngũ đầu bếp của chúng tôi không chỉ là những người nấu ăn, mà là những nghệ nhân thực sự. Họ tạo ra những món ăn như những tác phẩm nghệ thuật, kết hợp các hương vị một cách khéo léo và tinh tế để mang đến cho thực khách trải nghiệm ẩm thực khó quên. Nguyên liệu chúng tôi sử dụng luôn tươi ngon và cao cấp, kết hợp với sự sáng tạo và kỹ thuật chế biến đỉnh cao, để mang đến những món ăn truyền thống với phong cách hiện đại độc đáo.\n\nNhà hàng chúng tôi là nơi lý tưởng để bạn cùng gia đình và bạn bè tụ họp. Chúng tôi tạo ra một không gian riêng tư và thoải mái, với ánh sáng dịu nhẹ và không gian yên tĩnh, giúp thực khách có thể tận hưởng những bữa ăn thượng hạng trong không gian ấm cúng.\n\nĐội ngũ nhân viên phục vụ chuyên nghiệp và tận tâm của chúng tôi luôn sẵn sàng phục vụ, đảm bảo mỗi khách hàng đều được chăm sóc chu đáo. Chúng tôi không chỉ phục vụ thức ăn, mà còn mang đến những trải nghiệm ẩm thực vượt ngoài mong đợi.\n\nHãy đến và trải nghiệm không gian thanh lịch và tinh tế của nhà hàng chúng tôi. Chúng tôi cam kết mang đến cho quý khách trải nghiệm ẩm thực đẳng cấp, tạo nên những kỷ niệm đáng nhớ qua từng bữa ăn.");
         txt.setWrapStyleWord(true);
         txt.setBorder(null);
         txt.setDisabledTextColor(new java.awt.Color(255, 255, 255));
@@ -77,27 +76,13 @@ public class AboutUs_Form extends javax.swing.JPanel {
         footer.setBackground(new java.awt.Color(255, 255, 255));
         footer.setFont(new java.awt.Font("Segoe UI", 3, 18)); // NOI18N
         footer.setForeground(new java.awt.Color(63, 63, 63));
-        footer.setText("Since : 2023 - Co-founder by The Dreamers Team\n");
-
-        jScrollPane3.setBackground(new java.awt.Color(255, 255, 255));
-        jScrollPane3.setBorder(null);
-        jScrollPane3.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        jScrollPane3.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
-        jScrollPane3.setFocusable(false);
-
-        listMember.setColumns(20);
-        listMember.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
-        listMember.setForeground(new java.awt.Color(89, 89, 89));
-        listMember.setRows(5);
-        listMember.setText("Team Members :\nLê Thị Ánh Hồng - Product Owner\nNguyễn Hoàng Việt - Scrum Master\nNguyễn Hoàng Phúc - Developer\nHồ Quang Đỉnh -  Developer");
-        listMember.setBorder(null);
-        listMember.setFocusable(false);
-        jScrollPane3.setViewportView(listMember);
+        footer.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        footer.setText("Since : 2024 - Co-founder by Panda Team");
 
         jSeparator1.setBackground(new java.awt.Color(76, 76, 76));
 
         header1.setFont(new java.awt.Font("Segoe UI", 2, 16)); // NOI18N
-        header1.setForeground(new java.awt.Color(89, 89, 89));
+        header1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         header1.setText("Tastes like a bit of heaven on your tongue.");
         header1.setToolTipText("");
 
@@ -108,66 +93,57 @@ public class AboutUs_Form extends javax.swing.JPanel {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelRound1Layout.createSequentialGroup()
                 .addGroup(panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelRound1Layout.createSequentialGroup()
+                        .addGap(26, 26, 26)
                         .addGroup(panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(panelRound1Layout.createSequentialGroup()
-                                .addGap(236, 236, 236)
-                                .addComponent(header))
-                            .addGroup(panelRound1Layout.createSequentialGroup()
-                                .addGap(26, 26, 26)
-                                .addGroup(panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(wel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 550, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(footer)
-                                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE))
+                            .addComponent(footer, javax.swing.GroupLayout.PREFERRED_SIZE, 540, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 558, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(header1, javax.swing.GroupLayout.PREFERRED_SIZE, 533, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(wel, javax.swing.GroupLayout.PREFERRED_SIZE, 550, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelRound1Layout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelRound1Layout.createSequentialGroup()
-                                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 470, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(75, 75, 75))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelRound1Layout.createSequentialGroup()
-                                .addComponent(header1)
-                                .addGap(116, 116, 116)))))
+                        .addGroup(panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(header, javax.swing.GroupLayout.PREFERRED_SIZE, 479, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 470, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(75, 75, 75)))
                 .addComponent(img, javax.swing.GroupLayout.PREFERRED_SIZE, 494, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(2, 2, 2))
         );
         panelRound1Layout.setVerticalGroup(
             panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelRound1Layout.createSequentialGroup()
-                .addGap(15, 15, 15)
-                .addComponent(header)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(34, 34, 34)
+                .addComponent(header, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 1, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
                 .addComponent(header1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
                 .addComponent(wel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 419, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 459, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(footer)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addComponent(img, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 756, Short.MAX_VALUE)
+            .addComponent(img, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 756, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(panelRound1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(7, Short.MAX_VALUE)
                 .addComponent(panelRound1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(7, Short.MAX_VALUE))
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -178,9 +154,7 @@ public class AboutUs_Form extends javax.swing.JPanel {
     private javax.swing.JLabel header1;
     private javax.swing.JLabel img;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTextArea listMember;
     private RTDRestaurant.View.Swing.PanelRound panelRound1;
     private javax.swing.JTextArea txt;
     private javax.swing.JLabel wel;

@@ -106,13 +106,13 @@
         <Component class="javax.swing.JLabel" name="lbTitle">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Segoe UI" size="24" style="1"/>
+              <Font name="SansSerif" size="24" style="1"/>
             </Property>
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="7b" green="5b" red="6c" type="rgb"/>
+              <Color blue="d" green="5" red="93" type="rgb"/>
             </Property>
             <Property name="horizontalAlignment" type="int" value="0"/>
-            <Property name="text" type="java.lang.String" value="BA&#x323;N &#x110;A&#x303; CH&#x102;&#x301;C CH&#x1af;A ? "/>
+            <Property name="text" type="java.lang.String" value="X&#xc1;C NH&#x1eac;N THAY &#x110;&#x1ed4;I ? "/>
           </Properties>
         </Component>
         <Component class="RTDRestaurant.View.Swing.ButtonOutLine" name="cmdOK">
