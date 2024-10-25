@@ -8,9 +8,9 @@
 - Công cụ quản lý mã nguồn: `github`  <br>
 
 # 2. Yêu cầu cài dặt:
-- `JDK 17`/JDK22 <br>
+- `JDK 17`/`JDK22` <br>
 - `ojdbc8.jar` <br>
-- `Netbeans` <br>
-- `Mysql` <br>
+- `IDE: Netbeans` <br>
+- `Oracle SQL` <br>
 
 
