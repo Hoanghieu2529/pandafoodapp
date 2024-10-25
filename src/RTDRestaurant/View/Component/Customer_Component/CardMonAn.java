@@ -58,7 +58,7 @@ public class CardMonAn extends javax.swing.JPanel {
         setBackground(new java.awt.Color(255, 255, 255));
 
         lbTitle.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        lbTitle.setForeground(new java.awt.Color(108, 91, 123));
+        lbTitle.setForeground(new java.awt.Color(147, 5, 13));
         lbTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lbTitle.setText("Title");
 
@@ -83,7 +83,7 @@ public class CardMonAn extends javax.swing.JPanel {
             }
         });
 
-        cmdOrder.setBackground(new java.awt.Color(108, 91, 123));
+        cmdOrder.setBackground(new java.awt.Color(147, 5, 13));
         cmdOrder.setForeground(new java.awt.Color(242, 242, 242));
         cmdOrder.setText("THÊM");
         cmdOrder.setToolTipText("");

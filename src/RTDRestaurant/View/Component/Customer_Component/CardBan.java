@@ -75,11 +75,11 @@ public class CardBan extends javax.swing.JPanel {
         img.setOpaque(true);
 
         lbValue.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        lbValue.setForeground(new java.awt.Color(108, 91, 123));
+        lbValue.setForeground(new java.awt.Color(147, 5, 13));
         lbValue.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lbValue.setText("Value");
 
-        cmdBook.setBackground(new java.awt.Color(108, 91, 123));
+        cmdBook.setBackground(new java.awt.Color(147, 5, 13));
         cmdBook.setForeground(new java.awt.Color(255, 255, 255));
         cmdBook.setText("ĐẶT BÀN");
         cmdBook.setToolTipText("");
@@ -87,7 +87,7 @@ public class CardBan extends javax.swing.JPanel {
         cmdBook.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
 
         lbTitle.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
-        lbTitle.setForeground(new java.awt.Color(108, 91, 123));
+        lbTitle.setForeground(new java.awt.Color(147, 5, 13));
         lbTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lbTitle.setText("Title");
 

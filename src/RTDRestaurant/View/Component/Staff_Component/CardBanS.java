@@ -42,8 +42,8 @@ public class CardBanS extends javax.swing.JPanel {
         lbValue.setText(table.getStatus());
         switch (table.getStatus()) {
             case "Con trong" -> {
-                img.setBackground(Color.decode("#E9E4F0"));
-                cmdAdj.setBackground(Color.decode("#355C7D"));
+                img.setBackground(Color.decode("#D09476"));
+                cmdAdj.setBackground(Color.decode("#A64A51"));
                 cmdAdj.setText("ĐẶT TRƯỚC");
                 //Nếu bàn trống thì thêm event xử lý đặt bàn
                 cmdAdj.addActionListener(new ActionListener() {
@@ -54,7 +54,7 @@ public class CardBanS extends javax.swing.JPanel {
                 });
             }
             case "Dang dung bua" -> {
-                img.setBackground(Color.decode("#605C3C"));
+                img.setBackground(Color.decode("#A64A51"));
                 cmdAdj.setText("GỌI MÓN");
                 cmdAdj.addActionListener(new ActionListener() {
                     @Override
@@ -96,11 +96,11 @@ public class CardBanS extends javax.swing.JPanel {
         img.setOpaque(true);
 
         lbValue.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        lbValue.setForeground(new java.awt.Color(108, 91, 123));
+        lbValue.setForeground(new java.awt.Color(105, 75, 75));
         lbValue.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lbValue.setText("Value");
 
-        cmdAdj.setBackground(new java.awt.Color(108, 91, 123));
+        cmdAdj.setBackground(new java.awt.Color(201, 75, 75));
         cmdAdj.setForeground(new java.awt.Color(255, 255, 255));
         cmdAdj.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/levels.png"))); // NOI18N
         cmdAdj.setText("TÙY CHỈNH");
@@ -111,7 +111,7 @@ public class CardBanS extends javax.swing.JPanel {
         cmdAdj.setIconTextGap(20);
 
         lbTitle.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
-        lbTitle.setForeground(new java.awt.Color(108, 91, 123));
+        lbTitle.setForeground(new java.awt.Color(201, 75, 75));
         lbTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lbTitle.setText("Title");
 

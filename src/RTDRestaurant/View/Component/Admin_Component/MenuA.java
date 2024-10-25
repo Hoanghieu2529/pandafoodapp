@@ -113,7 +113,7 @@ public class MenuA extends javax.swing.JPanel {
         logo.setForeground(new java.awt.Color(255, 255, 255));
         logo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         logo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/businessman.png"))); // NOI18N
-        logo.setText("<html>Royal Administrator<br> Restaurant ★★★★★</html>");
+        logo.setText("<html>Panda Administrator<br> Restaurant ★★★★★</html>");
         logo.setIconTextGap(15);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);

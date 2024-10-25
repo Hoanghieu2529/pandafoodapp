@@ -59,7 +59,7 @@ public class PanelCover extends javax.swing.JPanel {
         description.setForeground(new Color(245,245,245));
         add(description);
         
-        description1 = new JLabel("đăng nhập với tài khoản cá nhân của bạn");
+        description1 = new JLabel("đăng nhập tài khoản cá nhân của bạn");
         description1.setForeground(new Color(245,245,245));
         add(description1);
         
@@ -155,7 +155,7 @@ public class PanelCover extends javax.swing.JPanel {
             }else{
                 //Set Data cho Panel cover khi ở màn hình đăng ký
                 logo.setIcon(new ImageIcon(getClass().getResource("/Icons/logo_register.png")));
-                title.setText("Chào mừng bạn đến với nhà hàng");
+                title.setText("Chào mừng bạn đến với Panda Restaurant");
                 description.setText("Để sử dụng dịch vụ tại đây vui lòng");
                 description1.setText("đăng nhập với tài khoản cá nhân của bạn");
                 button.setText("<<  Đăng nhập");

@@ -102,11 +102,11 @@ public class CardVoucher extends javax.swing.JPanel {
         img.setOpaque(true);
 
         lbQuantity.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
-        lbQuantity.setForeground(new java.awt.Color(108, 91, 123));
+        lbQuantity.setForeground(new java.awt.Color(147, 5, 13));
         lbQuantity.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lbQuantity.setText("Quantity");
 
-        cmdExchange.setBackground(new java.awt.Color(108, 91, 123));
+        cmdExchange.setBackground(new java.awt.Color(147, 5, 13));
         cmdExchange.setForeground(new java.awt.Color(255, 255, 255));
         cmdExchange.setText("ĐỔI VOUCHER");
         cmdExchange.setToolTipText("");
@@ -114,12 +114,12 @@ public class CardVoucher extends javax.swing.JPanel {
         cmdExchange.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
 
         ibDescription.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        ibDescription.setForeground(new java.awt.Color(108, 91, 123));
+        ibDescription.setForeground(new java.awt.Color(147, 5, 13));
         ibDescription.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         ibDescription.setText("Title");
 
         lbPoint.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
-        lbPoint.setForeground(new java.awt.Color(108, 91, 123));
+        lbPoint.setForeground(new java.awt.Color(147, 5, 13));
         lbPoint.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lbPoint.setText("Point");
 

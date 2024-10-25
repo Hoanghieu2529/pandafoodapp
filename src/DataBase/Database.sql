@@ -1,3 +1,8 @@
+/*
+Quan trong chay toan bo lenh tao bang
+
+*/
+
 --DROP table NguoiDung;
 --Tao bang NguoiDung
 create table NguoiDung(
@@ -61,6 +66,7 @@ create table KhachHang(
     Diemtichluy number(5,0) DEFAULT 0,
     ID_ND NUMBER(8,0)
 );
+
 --Them Check Constraint
 alter table KhachHang
     add constraint KH_TenKH_NNULL check ('TenKH' is not null)
@@ -72,6 +78,7 @@ alter table KhachHang
 ---Them khoa chinh
 alter table KhachHang
     add constraint KhachHang_PK PRIMARY KEY (ID_KH);
+    
     
 ---Them khoa ngoai
 ALTER TABLE KhachHang
@@ -91,12 +98,15 @@ create table MonAn(
 alter table MonAn
     add constraint MA_TenMon_NNULL check ('TenMon' is not null)
     add constraint MA_DonGia_NNULL check ('Dongia' is not null)
-    add constraint MA_Loai_Ten check (Loai in ('Ti','Suu','Dan','Mao','Thin','Ty','Ngo','Mui','Than','Dau','Tuat','Hoi'))
+    add constraint MA_Loai_Ten check (Loai in ('Lamb','Beef','Combo','Dessert','Drink','KingCrab','KoreanFood','Salad','Rice','Pork','Chevon','Sushi'))
     add constraint MA_TrangThai_Thuoc check (TrangThai in('Dang kinh doanh','Ngung kinh doanh'));                                             
+
+-
 
 --Them khoa chinh
 alter table MonAn
     add constraint MonAn_PK PRIMARY KEY (ID_MonAn);
+
 
 
 --Tao bang Ban
@@ -137,7 +147,9 @@ alter table Voucher
     add constraint V_Code_NNULL check ('Code_Voucher' is not null)
     add constraint V_Mota_NNULL check ('Mota' is not null)
     add constraint V_Phantram_NNULL check (Phantram > 0 AND Phantram <= 100)
-    add constraint V_LoaiMA_Thuoc check (LoaiMA in ('All','Ti','Suu','Dan','Mao','Thin','Ty','Ngo','Mui','Than','Dau','Tuat','Hoi'));
+    add constraint V_LoaiMA_Thuoc check (LoaiMA in ('All','Lamb','Beef','Combo','Dessert','Drink','KingCrab','KoreanFood','Salad','Rice','Pork','Chevon','Sushi'));
+
+
 
 ---Them khoa chinh
 alter table Voucher
@@ -168,10 +180,8 @@ alter table HoaDon
     add constraint HD_PK PRIMARY KEY (ID_HoaDon);
 
 ALTER TABLE HoaDon
- ADD CONSTRAINT HD_fk_idKH FOREIGN KEY 
- (ID_KH) REFERENCES KhachHang(ID_KH)
- ADD CONSTRAINT HD_fk_idBan FOREIGN KEY 
- (ID_Ban) REFERENCES Ban(ID_Ban);
+ ADD CONSTRAINT HD_fk_idKH FOREIGN KEY (ID_KH) REFERENCES KhachHang(ID_KH)
+ ADD CONSTRAINT HD_fk_idBan FOREIGN KEY ID_Ban) REFERENCES Ban(ID_Ban);
  
 
 --Tao bang CTHD
@@ -190,6 +200,16 @@ alter table CTHD
 --Them khoa chinh
 alter table CTHD
     add constraint CTHD_PK PRIMARY KEY (ID_HoaDon,ID_MonAn);
+    
+--
+--SELECT ID_HoaDon, ID_MonAn, COUNT(*)
+--FROM CTHD
+--GROUP BY ID_HoaDon, ID_MonAn
+--HAVING COUNT(*) > 1;
+--
+--DELETE FROM CTHD
+--WHERE ID_HoaDon = 113 AND ID_MonAn = 80;
+
 
 ALTER TABLE CTHD
  ADD CONSTRAINT CTHD_fk_idHD FOREIGN KEY 
@@ -224,8 +244,6 @@ create table Kho(
     SLTon NUMBER(3,0) DEFAULT 0
 );
 --Them Check Constraint
-
-
 --Them khoa chinh
 ALTER TABLE Kho
     ADD CONSTRAINT Kho_pk PRIMARY KEY (ID_NL);
@@ -724,43 +742,91 @@ END;
 
 
 -- Procudure xoa mot NHANVIEN voi idNV
+/*****************************************************************************************************
+
+-----------------------------------------------------------------------------------------------------
+
+*******/
+--CREATE OR REPLACE PROCEDURE NV_XoaNV(idNV NHANVIEN.ID_NV%TYPE)
+--IS
+--    v_count NUMBER;
+--    idNQL NHANVIEN.ID_NQL%TYPE;
+--BEGIN 
+--    SELECT COUNT(ID_NV),ID_NQL
+--    INTO v_count,ID_NQL
+--    FROM NHANVIEN
+--    WHERE ID_NV=idNV;
+--    
+--    IF(v_count>0) THEN
+--        IF (id_NV = idNQL) THEN
+--            RAISE_APPLICATION_ERROR(-20000,'Khong the xoa QUAN LY');
+--        ELSE
+--            FOR cur IN (SELECT ID_NK FROM PHIEUNK
+--            WHERE ID_NV=idNV
+--            )
+--            LOOP
+--                DELETE FROM CTNK WHERE ID_NK=cur.ID_NK;
+--            END LOOP;
+--            
+--            FOR cur IN (SELECT ID_XK FROM PHIEUXK
+--            WHERE ID_NV=idNV
+--            )
+--            LOOP
+--                DELETE FROM CTXK WHERE ID_XK=cur.ID_XK;
+--            END LOOP;
+--            
+--            DELETE FROM PHIEUNK WHERE ID_NV=idNV;
+--            DELETE FROM PHIEUNK WHERE ID_NV=idNV;
+--            DELETE FROM NHANVIEN WHERE ID_NV=idNV;
+--        END IF;
+--    ELSE 
+--        RAISE_APPLICATION_ERROR(-20000,'Nhan vien khong ton tai');
+--    END IF;
+--END;
+--/
 CREATE OR REPLACE PROCEDURE NV_XoaNV(idNV NHANVIEN.ID_NV%TYPE)
 IS
     v_count NUMBER;
     idNQL NHANVIEN.ID_NQL%TYPE;
 BEGIN 
-    SELECT COUNT(ID_NV),ID_NQL
-    INTO v_count,ID_NQL
+    -- Select to check if the employee exists and to get the ID_NQL
+    SELECT COUNT(ID_NV), ID_NQL
+    INTO v_count, idNQL
     FROM NHANVIEN
-    WHERE ID_NV=idNV;
-    
-    IF(v_count>0) THEN
-        IF (id_NV = idNQL) THEN
-            RAISE_APPLICATION_ERROR(-20000,'Khong the xoa QUAN LY');
+    WHERE ID_NV = idNV;
+
+    -- Check if employee exists
+    IF(v_count > 0) THEN
+        -- Check if the employee is a manager (i.e., idNV is the same as idNQL)
+        IF (idNV = idNQL) THEN
+            RAISE_APPLICATION_ERROR(-20000, 'Khong the xoa QUAN LY');
         ELSE
-            FOR cur IN (SELECT ID_NK FROM PHIEUNK
-            WHERE ID_NV=idNV
-            )
+            -- Delete related entries in CTNK
+            FOR cur IN (SELECT ID_NK FROM PHIEUNK WHERE ID_NV = idNV)
             LOOP
-                DELETE FROM CTNK WHERE ID_NK=cur.ID_NK;
+                DELETE FROM CTNK WHERE ID_NK = cur.ID_NK;
             END LOOP;
             
-            FOR cur IN (SELECT ID_XK FROM PHIEUXK
-            WHERE ID_NV=idNV
-            )
+            -- Delete related entries in CTXK
+            FOR cur IN (SELECT ID_XK FROM PHIEUXK WHERE ID_NV = idNV)
             LOOP
-                DELETE FROM CTXK WHERE ID_XK=cur.ID_XK;
+                DELETE FROM CTXK WHERE ID_XK = cur.ID_XK;
             END LOOP;
-            
-            DELETE FROM PHIEUNK WHERE ID_NV=idNV;
-            DELETE FROM PHIEUNK WHERE ID_NV=idNV;
-            DELETE FROM NHANVIEN WHERE ID_NV=idNV;
+
+            -- Delete records from PHIEUNK and PHIEUXK
+            DELETE FROM PHIEUNK WHERE ID_NV = idNV;
+            DELETE FROM PHIEUXK WHERE ID_NV = idNV;
+
+            -- Finally, delete the employee from NHANVIEN
+            DELETE FROM NHANVIEN WHERE ID_NV = idNV;
         END IF;
     ELSE 
-        RAISE_APPLICATION_ERROR(-20000,'Nhan vien khong ton tai');
+        RAISE_APPLICATION_ERROR(-20000, 'Nhan vien khong ton tai');
     END IF;
 END;
 /
+
+
 -- Procudure xoa mot KHACHHANG voi idKH
 CREATE OR REPLACE PROCEDURE KH_XoaKH(idKH KHACHHANG.ID_KH%TYPE)
 IS
@@ -1171,20 +1237,21 @@ Pk Fk
 --Them data cho Bang NguoiDung
 --Nhan vien
 */
-INSERT INTO NguoiDung(ID_ND,Email,MatKhau,Trangthai,Vaitro) VALUES (100,'NVHoangHieu@gmail.com','123','Verified','NhanVien');
+INSERT INTO NguoiDung(ID_ND,Email,MatKhau,Trangthai,Vaitro) VALUES (100,'NVHoangHieu@gmail.com','123','Verified','Nhan Vien');
 INSERT INTO NguoiDung(ID_ND,Email,MatKhau,Trangthai,Vaitro) VALUES (101,'NVAnhDuc@gmail.com','123','Verified','Quan Ly');
 INSERT INTO NguoiDung(ID_ND,Email,MatKhau,Trangthai,Vaitro) VALUES (102,'NVThebao@gmail.com','123','Verified','Nhan Vien Kho');
 INSERT INTO NguoiDung(ID_ND,Email,MatKhau,Trangthai,Vaitro) VALUES (103,'NVNgocDinh@gmail.com','123','Verified','Nhan Vien');
-INSERT INTO NguoiDung(ID_ND,Email,MatKhau,Trangthai,Vaitro) VALUES (104,'Admin1.panda@gmail.com','123','Verified','Quan Ly');
+INSERT INTO NguoiDung(ID_ND,Email,MatKhau,Trangthai,Vaitro) VALUES (116,'Admin1.panda@gmail.com','123','Verified','Quan Ly');
+INSERT INTO NguoiDung(ID_ND,Email,MatKhau,Trangthai,Vaitro) VALUES (115,'Admin2.panda@gmail.com','123','Verified','Nhan Vien');
+INSERT INTO NguoiDung(ID_ND,Email,MatKhau,Trangthai,Vaitro) VALUES (117,'Admin3.panda@gmail.com','123','Verified','Nhan Vien Kho');
+--
+---- check vai tro
+--SELECT search_condition
+--FROM all_constraints
+--WHERE constraint_name = 'ND_VAITRO_TEN';
 
--- check vai tro
-SELECT search_condition
-FROM all_constraints
-WHERE constraint_name = 'ND_VAITRO_TEN';
-
--- check bang nguoidung
-SELECT * From NguoiDung;
-
+---- check bang nguoidung
+--SELECT * From NguoiDung;
 
 --Khach Hang
 INSERT INTO NguoiDung(ID_ND,Email,MatKhau,Trangthai,Vaitro) VALUES (104,'KHTuanAnh@gmail.com','123','Verified','Khach Hang');
@@ -1197,9 +1264,11 @@ INSERT INTO NguoiDung(ID_ND,Email,MatKhau,Trangthai,Vaitro) VALUES (110,'KHMinhQ
 INSERT INTO NguoiDung(ID_ND,Email,MatKhau,Trangthai,Vaitro) VALUES (111,'KHThanhHang@gmail.com','123','Verified','Khach Hang');
 INSERT INTO NguoiDung(ID_ND,Email,MatKhau,Trangthai,Vaitro) VALUES (112,'KHThanhNhan@gmail.com','123','Verified','Khach Hang');
 INSERT INTO NguoiDung(ID_ND,Email,MatKhau,Trangthai,Vaitro) VALUES (113,'KHPhucNguyen@gmail.com','123','Verified','Khach Hang');
+INSERT INTO NguoiDung(ID_ND,Email,MatKhau,Trangthai,Vaitro) VALUES (114,'Pandadmin','123','Verified','Khach Hang');
 
 --Them data cho bang Nhan Vien
 ALTER SESSION SET NLS_DATE_FORMAT = 'dd-MM-YYYY';
+
 --Co tai khoan
 INSERT INTO NhanVien(ID_NV,TenNV,NgayVL,SDT,Chucvu,ID_ND,ID_NQL,Tinhtrang) VALUES (100,'Tran The Bao','10/05/2024','0848044725','Quan ly',100,100,'Dang lam viec');
 INSERT INTO NhanVien(ID_NV,TenNV,NgayVL,SDT,Chucvu,ID_ND,ID_NQL,Tinhtrang) VALUES (101,'Nguyen Duy Hieu','20/05/2024','0838033334','Tiep tan',101,100,'Dang lam viec');
@@ -1226,119 +1295,147 @@ INSERT INTO KhachHang(ID_KH,TenKH,Ngaythamgia,ID_ND) VALUES (108,'Nguyen Ngoc Th
 INSERT INTO KhachHang(ID_KH,TenKH,Ngaythamgia,ID_ND) VALUES (109,'Hoang Thi Phuc Nguyen','12/05/2024',113);
 /*
 --Them data cho bang MonAn
---Ti
+
 */
-insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(1,'DUI CUU NUONG XE NHO', 250000,'Ti','Dang kinh doanh');
-insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(2,'BE SUON CUU NUONG GIAY BAC MONG CO', 230000,'Ti','Dang kinh doanh');
-insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(3,'DUI CUU NUONG TRUNG DONG', 350000,'Ti','Dang kinh doanh');
-insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(4,'CUU XOC LA CA RI', 129000,'Ti','Dang kinh doanh');
-insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(5,'CUU KUNGBAO', 250000,'Ti','Dang kinh doanh');
-insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(6,'BAP CUU NUONG CAY', 250000,'Ti','Dang kinh doanh');
-insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(7,'CUU VIEN HAM CAY', 19000,'Ti','Dang kinh doanh');
-insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(8,'SUON CONG NUONG MONG CO', 250000,'Ti','Dang kinh doanh');
-insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(9,'DUI CUU LON NUONG TAI BAN', 750000,'Ti','Dang kinh doanh');
-insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(10,'SUONG CUU NUONG SOT NAM', 450000,'Ti','Dang kinh doanh');
-insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(11,'DUI CUU NUONG TIEU XANH', 285000,'Ti','Dang kinh doanh');
-insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(12,'SUON CUU SOT PHO MAI', 450000,'Ti','Dang kinh doanh');
 
---Suu
-insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(13,'Bit tet bo My khoai tay', 179000,'Suu','Dang kinh doanh');
-insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(14,'Bo bit tet Uc',169000,'Suu','Dang kinh doanh');
-insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(15,'Bit tet bo My BASIC', 179000,'Suu','Dang kinh doanh');
-insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(16,'My Y bo bam', 169000,'Suu','Dang kinh doanh');
-insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(17,'Thit suon Wagyu', 1180000,'Suu','Dang kinh doanh');
-insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(18,'Steak Thit Vai Wagyu', 1290000,'Suu','Dang kinh doanh');
-insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(19,'Steak Thit Bung Bo', 550000,'Suu','Dang kinh doanh');
-insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(20,'Tomahawk', 2390000,'Suu','Dang kinh doanh');
-insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(21,'Salad Romaine Nuong', 180000,'Suu','Dang kinh doanh');
+--Lamb - Cuu
+insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(1,'DUI CUU NUONG XE NHO', 250000,'Lamb','Dang kinh doanh');
+insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(2,'BE SUON CUU NUONG GIAY BAC MONG CO', 230000,'Lamb','Dang kinh doanh');
+insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(3,'DUI CUU NUONG TRUNG DONG', 350000,'Lamb','Dang kinh doanh');
+insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(4,'CUU XOC LA CA RI', 129000,'Lamb','Dang kinh doanh');
+insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(5,'CUU KUNGBAO', 250000,'Lamb','Dang kinh doanh');
+insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(6,'BAP CUU NUONG CAY', 250000,'Lamb','Dang kinh doanh');
+insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(7,'CUU VIEN HAM CAY', 19000,'Lamb','Dang kinh doanh');
+insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(8,'SUON CONG NUONG MONG CO', 250000,'Lamb','Dang kinh doanh');
+insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(9,'DUI CUU LON NUONG TAI BAN', 750000,'Lamb','Dang kinh doanh');
+insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(10,'SUONG CUU NUONG SOT NAM', 450000,'Lamb','Dang kinh doanh');
+insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(11,'DUI CUU NUONG TIEU XANH', 285000,'Lamb','Dang kinh doanh');
+insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(12,'SUON CUU SOT PHO MAI', 450000,'Lamb','Dang kinh doanh');
 
---Dan
-insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(22,'Combo Happy', 180000,'Dan','Dang kinh doanh');
-insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(23,'Combo Fantastic', 190000,'Dan','Dang kinh doanh');
-insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(24,'Combo Dreamer', 230000,'Dan','Dang kinh doanh');
-insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(25,'Combo Cupid', 180000,'Dan','Dang kinh doanh');
-insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(26,'Combo Poseidon', 190000,'Dan','Dang kinh doanh');
-insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(27,'Combo LUANG PRABANG', 490000,'Dan','Dang kinh doanh');
-insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(28,'Combo VIENTIANE', 620000,'Dan','Dang kinh doanh');
+select * from MonAn;
 
---Mao
-insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(29,'Cua KingCrab Duc sot', 3650000,'Mao','Dang kinh doanh');
-insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(30,'Mai Cua KingCrab Topping Pho Mai', 2650000,'Mao','Dang kinh doanh');
-insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(31,'Cua KingCrab sot Tu Xuyen', 2300000,'Mao','Dang kinh doanh');
-insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(32,'Cua KingCrab Nuong Tu Nhien', 2550000,'Mao','Dang kinh doanh');
-insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(33,'Cua KingCrab Nuong Bo Toi', 2650000,'Mao','Dang kinh doanh');
-insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(34,'Com Mai Cua KingCrab Chien', 1850000,'Mao','Dang kinh doanh');
 
---Thin
-insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(35,'BOSSAM', 650000,'Thin','Dang kinh doanh');
-insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(36,'KIMCHI PANCAKE', 350000,'Thin','Dang kinh doanh');
-insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(37,'SPICY RICE CAKE', 250000,'Thin','Dang kinh doanh');
-insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(38,'SPICY SAUSAGE HOTPOT', 650000,'Thin','Dang kinh doanh');
-insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(39,'SPICY PORK', 350000,'Thin','Dang kinh doanh');
-insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(40,'MUSHROOM SPICY SILKY TOFU STEW', 350000,'Thin','Dang kinh doanh');
---Ty
-insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(41,'Pavlova', 150000,'Ty','Dang kinh doanh');
-insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(42,'Kesutera', 120000,'Ty','Dang kinh doanh');
-insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(43,'Cremeschnitte', 250000,'Ty','Dang kinh doanh');
-insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(44,'Sachertorte', 150000,'Ty','Dang kinh doanh');
-insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(45,'Schwarzwalder Kirschtorte', 250000,'Ty','Dang kinh doanh');
-insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(46,'New York-Style Cheesecake', 250000,'Ty','Dang kinh doanh');
 
---Ngo
-insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(47,'Cobb Salad', 150000,'Ngo','Dang kinh doanh');
-insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(48,'Salad Israeli', 120000,'Ngo','Dang kinh doanh');
-insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(49,'Salad Dau den', 120000,'Ngo','Dang kinh doanh');
-insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(50,'Waldorf Salad', 160000,'Ngo','Dang kinh doanh');
-insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(51,'Salad Gado-Gado', 200000,'Ngo','Dang kinh doanh');
-insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(52,'Nicoise Salad', 250000,'Ngo','Dang kinh doanh');
+--Beef - bò
+insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(13,'Bit tet bo My khoai tay', 179000,'Beef','Dang kinh doanh');
+insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(14,'Bo bit tet Uc',169000,'Beef','Dang kinh doanh');
+insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(15,'Bit tet bo My BASIC', 179000,'Beef','Dang kinh doanh');
+insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(16,'My Y bo bam', 169000,'Beef','Dang kinh doanh');
+insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(17,'Thit suon Wagyu', 1180000,'Beef','Dang kinh doanh');
+insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(18,'Steak Thit Vai Wagyu', 1290000,'Beef','Dang kinh doanh');
+insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(19,'Steak Thit Bung Bo', 550000,'Beef','Dang kinh doanh');
+insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(20,'Tomahawk', 2390000,'Beef','Dang kinh doanh');
+insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(21,'Salad Romaine Nuong', 180000,'Beef','Dang kinh doanh');
 
---Mui
-insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(53,'BULGOGI LUNCHBOX', 250000,'Mui','Dang kinh doanh');
-insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(54,'CHICKEN TERIYAKI LUNCHBOX', 350000,'Mui','Dang kinh doanh');
-insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(55,'SPICY PORK LUNCHBOX', 350000,'Mui','Dang kinh doanh');
-insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(56,'TOFU TERIYAKI LUNCHBOX', 250000,'Mui','Dang kinh doanh');
 
---Than
-insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(57,'Thit ngua do tuoi', 250000,'Than','Dang kinh doanh');
-insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(58,'Steak Thit ngua', 350000,'Than','Dang kinh doanh');
-insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(59,'Thit ngua ban gang', 350000,'Than','Dang kinh doanh');
-insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(60,'Long ngua xao dua', 150000,'Than','Dang kinh doanh');
-insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(61,'Thit ngua xao sa ot', 250000,'Than','Dang kinh doanh');
-insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(62,'Ngua tang', 350000,'Than','Dang kinh doanh');
+--Comb-uu dai
+insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(22,'Combo Happy', 180000,'Combo','Dang kinh doanh');
+insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(23,'Combo Fantastic', 190000,'Combo','Dang kinh doanh');
+insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(24,'Combo Dreamer', 230000,'Combo','Dang kinh doanh');
+insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(25,'Combo Cupid', 180000,'Combo','Dang kinh doanh');
+insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(26,'Combo Poseidon', 190000,'Combo','Dang kinh doanh');
+insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(27,'Combo LUANG PRABANG', 490000,'Combo','Dang kinh doanh');
+insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(28,'Combo VIENTIANE', 620000,'Combo','Dang kinh doanh');
+
+
+
+
+--KingCrab - cua hoang de
+insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(29,'Cua KingCrab Duc sot', 3650000,'KingCrab','Dang kinh doanh');
+insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(30,'Mai Cua KingCrab Topping Pho Mai', 2650000,'KingCrab','Dang kinh doanh');
+insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(31,'Cua KingCrab sot Tu Xuyen', 2300000,'KingCrab','Dang kinh doanh');
+insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(32,'Cua KingCrab Nuong Tu Nhien', 2550000,'KingCrab','Dang kinh doanh');
+insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(33,'Cua KingCrab Nuong Bo Toi', 2650000,'KingCrab','Dang kinh doanh');
+insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(34,'Com Mai Cua KingCrab Chien', 1850000,'KingCrab','Dang kinh doanh');
+
+
+--KoreanFood
+insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(35,'BOSSAM', 650000,'KoreanFood','Dang kinh doanh');
+insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(36,'KIMCHI PANCAKE', 350000,'KoreanFood','Dang kinh doanh');
+insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(37,'SPICY RICE CAKE', 250000,'KoreanFood','Dang kinh doanh');
+insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(38,'SPICY SAUSAGE HOTPOT', 650000,'KoreanFood','Dang kinh doanh');
+insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(39,'SPICY PORK', 350000,'KoreanFood','Dang kinh doanh');
+insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(40,'MUSHROOM SPICY SILKY TOFU STEW', 350000,'KoreanFood','Dang kinh doanh');
+
+
+
+--Dessert - Trang Mieng
+insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(41,'Pavlova', 150000,'Dessert','Dang kinh doanh');
+insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(42,'Kesutera', 120000,'Dessert','Dang kinh doanh');
+insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(43,'Cremeschnitte', 250000,'Dessert','Dang kinh doanh');
+insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(44,'Sachertorte', 150000,'Dessert','Dang kinh doanh');
+insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(45,'Schwarzwalder Kirschtorte', 250000,'Dessert','Dang kinh doanh');
+insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(46,'New York-Style Cheesecake', 250000,'Dessert','Dang kinh doanh');
+
+
+
+--Salad -Rau
+insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(47,'Cobb Salad', 150000,'Salad','Dang kinh doanh');
+insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(48,'Salad Israeli', 120000,'Salad','Dang kinh doanh');
+insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(49,'Salad Dau den', 120000,'Salad','Dang kinh doanh');
+insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(50,'Waldorf Salad', 160000,'Salad','Dang kinh doanh');
+insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(51,'Salad Gado-Gado', 200000,'Salad','Dang kinh doanh');
+insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(52,'Nicoise Salad', 250000,'Salad','Dang kinh doanh');
+
+
+--Rice - com nh?t
+insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(53,'BULGOGI LUNCHBOX', 250000,'Rice','Dang kinh doanh');
+insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(54,'CHICKEN TERIYAKI LUNCHBOX', 350000,'Rice','Dang kinh doanh');
+insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(55,'SPICY PORK LUNCHBOX', 350000,'Rice','Dang kinh doanh');
+insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(56,'TOFU TERIYAKI LUNCHBOX', 250000,'Rice','Dang kinh doanh');
+
+
+
+
+--Pork - Heo
+insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(57,'Thit heo do tuoi', 250000,'Pork','Dang kinh doanh');
+insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(58,'Steak Thit heo', 350000,'Pork','Dang kinh doanh');
+insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(59,'Thit heo ban gang', 350000,'Pork','Dang kinh doanh');
+insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(60,'Long heo xao dua', 150000,'Pork','Dang kinh doanh');
+insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(61,'Thit heo xao sa ot', 250000,'Pork','Dang kinh doanh');
+insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(62,'Heo tang bbq', 350000,'Pork','Dang kinh doanh');
+
+
+
+Select * From MonAn;
 
 --Dau
-insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(63,'Thit de xong hoi', 229000,'Dau','Dang kinh doanh');
-insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(64,'Thit de xao rau ngo', 199000,'Dau','Dang kinh doanh');
-insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(65,'Thit de nuong tang', 229000,'Dau','Dang kinh doanh');
-insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(66,'Thit de chao', 199000,'Dau','Dang kinh doanh');
-insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(67,'Thit de nuong xien', 199000,'Dau','Dang kinh doanh');
-insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(68,'Nam de nuong/chao', 199000,'Dau','Dang kinh doanh');
-insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(69,'Thit de xao lan', 19000,'Dau','Dang kinh doanh');
-insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(70,'Dui de tan thuoc bac', 199000,'Dau','Dang kinh doanh');
-insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(71,'Canh de ham duong quy', 199000,'Dau','Dang kinh doanh');
-insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(72,'Chao de dau xanh', 50000,'Dau','Dang kinh doanh');
-insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(73,'Thit de nhung me', 229000,'Dau','Dang kinh doanh');
-insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(74,'Lau de nhu', 499000,'Dau','Dang kinh doanh');
+insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(63,'Thit de xong hoi', 229000,'Chevon','Dang kinh doanh');
+insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(64,'Thit de xao rau ngo', 199000,'Chevon','Dang kinh doanh');
+insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(65,'Thit de nuong tang', 229000,'Chevon','Dang kinh doanh');
+insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(66,'Thit de chao', 199000,'Chevon','Dang kinh doanh');
+insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(67,'Thit de nuong xien', 199000,'Chevon','Dang kinh doanh');
+insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(68,'Nam de nuong/chao', 199000,'Chevon','Dang kinh doanh');
+insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(69,'Thit de xao lan', 19000,'Chevon','Dang kinh doanh');
+insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(70,'Dui de tan thuoc bac', 199000,'Chevon','Dang kinh doanh');
+insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(71,'Canh de ham duong quy', 199000,'Chevon','Dang kinh doanh');
+insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(72,'Chao de dau xanh', 50000,'Chevon','Dang kinh doanh');
+insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(73,'Thit de nhung me', 229000,'Chevon','Dang kinh doanh');
+insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(74,'Lau de nhu', 499000,'Chevon','Dang kinh doanh');
 
 
---Tuat
-insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(75,'SIGNATURE WINE', 3290000,'Tuat','Dang kinh doanh');
-insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(76,'CHILEAN WINE', 3990000,'Tuat','Dang kinh doanh');
-insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(77,'ARGENTINA WINE', 2890000,'Tuat','Dang kinh doanh');
-insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(78,'ITALIAN WINE', 5590000,'Tuat','Dang kinh doanh');
-insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(79,'AMERICAN WINE', 4990000,'Tuat','Dang kinh doanh');
-insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(80,'CLASSIC COCKTAIL', 200000,'Tuat','Dang kinh doanh');
-insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(81,'SIGNATURE COCKTAIL', 250000,'Tuat','Dang kinh doanh');
-insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(82,'MOCKTAIL', 160000,'Tuat','Dang kinh doanh');
-insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(83,'JAPANESE SAKE', 1490000,'Tuat','Dang kinh doanh');
+--Drink - N??c gi?i khát
+insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(75,'SIGNATURE WINE', 3290000,'Drink','Dang kinh doanh');
+insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(76,'CHILEAN WINE', 3990000,'Drink','Dang kinh doanh');
+insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(77,'ARGENTINA WINE', 2890000,'Drink','Dang kinh doanh');
+insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(78,'ITALIAN WINE', 5590000,'Drink','Dang kinh doanh');
+insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(79,'AMERICAN WINE', 4990000,'Drink','Dang kinh doanh');
+insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(80,'CLASSIC COCKTAIL', 200000,'Drink','Dang kinh doanh');
+insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(81,'SIGNATURE COCKTAIL', 250000,'Drink','Dang kinh doanh');
+insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(82,'MOCKTAIL', 160000,'Drink','Dang kinh doanh');
+insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(83,'JAPANESE SAKE', 1490000,'Drink','Dang kinh doanh');
 
---Hoi
-insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(84,'Ca Hoi Ngam Tuong', 289000,'Hoi','Dang kinh doanh');
-insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(85,'Ca Ngu Ngam Tuong', 289000,'Hoi','Dang kinh doanh');
-insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(86,'IKURA:Trung ca hoi', 189000,'Hoi','Dang kinh doanh');
-insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(87,'KARIN:Sashimi Ca Ngu', 149000,'Hoi','Dang kinh doanh');
-insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(88,'KEIKO:Sashimi Ca Hoi', 199000,'Hoi','Dang kinh doanh');
-insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(89,'CHIYO:Sashimi Bung Ca Hoi', 219000,'Hoi','Dang kinh doanh');
+
+
+--Sushi
+insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(84,'Ca Hoi Ngam Tuong', 289000,'Sushi','Dang kinh doanh');
+insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(85,'Ca Ngu Ngam Tuong', 289000,'Sushi','Dang kinh doanh');
+insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(86,'IKURA:Trung ca hoi', 189000,'Sushi','Dang kinh doanh');
+insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(87,'KARIN:Sashimi Ca Ngu', 149000,'Sushi','Dang kinh doanh');
+insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(88,'KEIKO:Sashimi Ca Hoi', 199000,'Sushi','Dang kinh doanh');
+insert into MonAn(ID_MonAn,TenMon,Dongia,Loai,TrangThai) values(89,'CHIYO:Sashimi Bung Ca Hoi', 219000,'Sushi','Dang kinh doanh');
+
+
 
 /*
 --Them data cho bang Ban
@@ -1384,18 +1481,20 @@ insert into Ban(ID_Ban,TenBan,Vitri,Trangthai) values(134,'Ban T3.1','Tang 3','C
 insert into Ban(ID_Ban,TenBan,Vitri,Trangthai) values(135,'Ban T3.1','Tang 3','Con trong');
 
 --Them data cho bang Voucher
-insert into Voucher(Code_Voucher, Phantram,LoaiMA,SoLuong,Diem) values ('loQy','20% off for Ti Menu',20,'Ti',10,200);
-insert into Voucher(Code_Voucher, Phantram,LoaiMA,SoLuong,Diem) values ('pCfI','30% off for Suu Menu',30,'Suu',5,300);
-insert into Voucher(Code_Voucher, Phantram,LoaiMA,SoLuong,Diem) values ('pApo','20% off for Dan Menu',20,'Dan',10,200);
-insert into Voucher(Code_Voucher, Phantram,LoaiMA,SoLuong,Diem) values ('ugQx','100% off for Ty Menu',100,'Ty',3,500);
-insert into Voucher(Code_Voucher, Phantram,LoaiMA,SoLuong,Diem) values ('nxVX','20% off for All Menu',20,'All',5,300);
-insert into Voucher(Code_Voucher, Phantram,LoaiMA,SoLuong,Diem) values ('Pwyn','20% off for Mao Menu',20,'Mao',10,200);
-insert into Voucher(Code_Voucher, Phantram,LoaiMA,SoLuong,Diem) values ('bjff','50% off for Thin Menu',50,'Thin',5,600);
-insert into Voucher(Code_Voucher, Phantram,LoaiMA,SoLuong,Diem) values ('YPzJ','20% off for Tuat Menu',20,'Tuat',5,200);
-insert into Voucher(Code_Voucher, Phantram,LoaiMA,SoLuong,Diem) values ('Y5g0','30% off for Hoi Menu',30,'Hoi',5,300);
-insert into Voucher(Code_Voucher, Phantram,LoaiMA,SoLuong,Diem) values ('7hVO','60% off for Ti Menu',60,'Ti',0,1000);
-insert into Voucher(Code_Voucher, Phantram,LoaiMA,SoLuong,Diem) values ('WHLm','20% off for Tuat Menu',20,'Tuat',0,200);
-insert into Voucher(Code_Voucher, Phantram,LoaiMA,SoLuong,Diem) values ('GTsC','20% off for Thin Menu',20,'Thin',0,200);
+INSERT INTO Voucher(Code_Voucher, Mota, Phantram, LoaiMA, SoLuong, Diem) VALUES ('loQy', '20% off for Drink Menu', 20, 'Drink', 10, 200);
+INSERT INTO Voucher(Code_Voucher, Mota, Phantram, LoaiMA, SoLuong, Diem) VALUES ('pCfI', '30% off for Lamb Menu', 30, 'Lamb', 5, 300);
+INSERT INTO Voucher(Code_Voucher, Mota, Phantram, LoaiMA, SoLuong, Diem) VALUES ('pApo', '20% off for Beef Menu', 20, 'Beef', 10, 200);
+INSERT INTO Voucher(Code_Voucher, Mota, Phantram, LoaiMA, SoLuong, Diem) VALUES ('ugQx', '100% off for Rice Menu', 100, 'Rice', 3, 500);
+INSERT INTO Voucher(Code_Voucher, Mota, Phantram, LoaiMA, SoLuong, Diem) VALUES ('nxVX', '20% off for All Menu', 20, 'All', 5, 300);
+INSERT INTO Voucher(Code_Voucher, Mota, Phantram, LoaiMA, SoLuong, Diem) VALUES ('Pwyn', '20% off for Pork Menu', 20, 'Pork', 10, 200);
+INSERT INTO Voucher(Code_Voucher, Mota, Phantram, LoaiMA, SoLuong, Diem) VALUES ('bjff', '50% off for Pork Menu', 50, 'Pork', 5, 600);
+INSERT INTO Voucher(Code_Voucher, Mota, Phantram, LoaiMA, SoLuong, Diem) VALUES ('YPzJ', '20% off for KingCrab Menu', 20, 'KingCrab', 5, 200);
+INSERT INTO Voucher(Code_Voucher, Mota, Phantram, LoaiMA, SoLuong, Diem) VALUES ('Y5g0', '30% off for KingCrab Menu', 30, 'KingCrab', 5, 300);
+INSERT INTO Voucher(Code_Voucher, Mota, Phantram, LoaiMA, SoLuong, Diem) VALUES ('7hVO', '60% off for Chevon Menu', 60, 'Chevon', 0, 1000);
+INSERT INTO Voucher(Code_Voucher, Mota, Phantram, LoaiMA, SoLuong, Diem) VALUES ('WHLm', '20% off for Sushi Menu', 20, 'Sushi', 0, 200);
+INSERT INTO Voucher(Code_Voucher, Mota, Phantram, LoaiMA, SoLuong, Diem) VALUES ('GTsC', '20% off for KoreanFood Menu', 20, 'KoreanFood', 0, 200);
+
+
 
 
 
@@ -1453,7 +1552,7 @@ INSERT INTO CTHD(ID_HoaDon,ID_MonAn,SoLuong) VALUES (112,49,3);
 INSERT INTO CTHD(ID_HoaDon,ID_MonAn,SoLuong) VALUES (112,80,2);
 INSERT INTO CTHD(ID_HoaDon,ID_MonAn,SoLuong) VALUES (112,31,5);
 INSERT INTO CTHD(ID_HoaDon,ID_MonAn,SoLuong) VALUES (113,80,2);
-INSERT INTO CTHD(ID_HoaDon,ID_MonAn,SoLuong) VALUES (113,80,2);
+INSERT INTO CTHD(ID_HoaDon,ID_MonAn,SoLuong) VALUES (113,46,2);
 INSERT INTO CTHD(ID_HoaDon,ID_MonAn,SoLuong) VALUES (114,30,2);
 INSERT INTO CTHD(ID_HoaDon,ID_MonAn,SoLuong) VALUES (114,32,3);
 INSERT INTO CTHD(ID_HoaDon,ID_MonAn,SoLuong) VALUES (115,80,2);
@@ -1585,12 +1684,6 @@ INSERT INTO CTXK(ID_XK,ID_NL,SoLuong) VALUES (109,112,5);
 INSERT INTO CTXK(ID_XK,ID_NL,SoLuong) VALUES (110,113,5);
 INSERT INTO CTXK(ID_XK,ID_NL,SoLuong) VALUES (110,114,5);
 
--- them du lieu cho voucher
-INSERT INTO Voucher (CODE_VOUCHER, MOTA, PHANTRAM, LOAIMA, SOLUONG, DIEM) VALUES ('VOUCHER10', 'Gi?m 10% cho t?t c? món ?n', 10, 'All', 100, 500);
-INSERT INTO Voucher (CODE_VOUCHER, MOTA, PHANTRAM, LOAIMA, SOLUONG, DIEM) VALUES ('VOUCHER25', 'Gi?m 25% cho món tráng mi?ng', 25, 'Dessert', 50, 300);
-INSERT INTO Voucher (CODE_VOUCHER, MOTA, PHANTRAM, LOAIMA, SOLUONG, DIEM) VALUES ('VOUCHER50', 'Gi?m 50% cho món chính', 50, 'Main', 30, 1000);
-INSERT INTO Voucher (CODE_VOUCHER, MOTA, PHANTRAM, LOAIMA, SOLUONG, DIEM) VALUES ('VOUCHER15', 'Gi?m 15% cho th?c u?ng', 15, 'Drink', 150, 200);
-INSERT INTO Voucher (CODE_VOUCHER, MOTA, PHANTRAM, LOAIMA, SOLUONG, DIEM) VALUES ('VOUCHER100', 'Gi?m 100% cho t?ng ??n hàng', 100, 'All', 10, 2000);
 
 
 /* Bat lai cac chuc nang trigger pk fk  */
@@ -1660,3 +1753,19 @@ SELECT * FROM PHIEUXK;
 
 -- Ki?m tra b?ng VOUCHER
 SELECT * FROM VOUCHER;
+
+
+--DROP TABLE CTHD CASCADE CONSTRAINTS;
+--DROP TABLE HOADON CASCADE CONSTRAINTS;
+--DROP TABLE VOUCHER CASCADE CONSTRAINTS;
+--DROP TABLE BAN CASCADE CONSTRAINTS;
+--DROP TABLE MONAN CASCADE CONSTRAINTS;
+--DROP TABLE NGUOIDUNG CASCADE CONSTRAINTS;
+--DROP TABLE NHANVIEN CASCADE CONSTRAINTS;
+--DROP TABLE KHACHHANG CASCADE CONSTRAINTS;
+--DROP TABLE PHIEUNK CASCADE CONSTRAINTS;
+--DROP TABLE PHIEUXK CASCADE CONSTRAINTS;
+--DROP TABLE CTNK CASCADE CONSTRAINTS;
+--DROP TABLE CTXK CASCADE CONSTRAINTS;
+--DROP TABLE NGUYENLIEU CASCADE CONSTRAINTS;
+--DROP TABLE KHO CASCADE CONSTRAINTS;

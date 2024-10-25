@@ -57,7 +57,7 @@ public class OrderFood_Form extends javax.swing.JPanel {
         txtKH.setText(HoaDon.getIdKH()+"");
         //Tìm thông tin Hóa Đơn mà Khách Hàng vừa tạo
         //Thêm data cho Menu
-        initMenuFood("Aries");
+        initMenuFood("Lamb");
         //Thêm event cho nút Xem hóa đơn
         cmdShowBill.addActionListener(new ActionListener(){
             @Override
@@ -210,7 +210,7 @@ public class OrderFood_Form extends javax.swing.JPanel {
         TypeMenu.setEditable(true);
         TypeMenu.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         TypeMenu.setForeground(new java.awt.Color(108, 91, 123));
-        TypeMenu.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Aries", "Taurus", "Gemini", "Cancer", "Leo", "Virgo", "Libra", "Scorpio", "Sagittarius", "Capricorn", "Aquarius", "Pisces" }));
+        TypeMenu.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Lamb", "Beef Wagyu", "Combo", "KingCard", "Korea Food", "Dessert", "Salad", "Rice", "Pork", "Chevon", "Drink", "Sushi Sashimi" }));
         TypeMenu.setToolTipText("Sắp xếp");
         TypeMenu.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(164, 145, 145), 2));
         TypeMenu.setFocusable(false);

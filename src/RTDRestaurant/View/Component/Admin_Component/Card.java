@@ -65,7 +65,7 @@ public class Card extends javax.swing.JPanel {
         lbDescription.setForeground(new java.awt.Color(255, 255, 255));
         lbDescription.setText("Description");
 
-        lbTitle.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        lbTitle.setFont(new java.awt.Font("Segoe UI", 1, 17)); // NOI18N
         lbTitle.setForeground(new java.awt.Color(255, 255, 255));
         lbTitle.setText("Title");
 

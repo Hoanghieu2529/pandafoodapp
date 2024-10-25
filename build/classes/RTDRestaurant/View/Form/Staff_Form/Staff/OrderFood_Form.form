@@ -266,18 +266,18 @@
         </Property>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
           <StringArray count="12">
-            <StringItem index="0" value="Aries"/>
-            <StringItem index="1" value="Taurus"/>
-            <StringItem index="2" value="Gemini"/>
-            <StringItem index="3" value="Cancer"/>
-            <StringItem index="4" value="Leo"/>
-            <StringItem index="5" value="Virgo"/>
-            <StringItem index="6" value="Libra"/>
-            <StringItem index="7" value="Scorpio"/>
-            <StringItem index="8" value="Sagittarius"/>
-            <StringItem index="9" value="Capricorn"/>
-            <StringItem index="10" value="Aquarius"/>
-            <StringItem index="11" value="Pisces"/>
+            <StringItem index="0" value="Lamb"/>
+            <StringItem index="1" value="Beef Wagyu"/>
+            <StringItem index="2" value="Combo"/>
+            <StringItem index="3" value="KingCard"/>
+            <StringItem index="4" value="Korea Food"/>
+            <StringItem index="5" value="Dessert"/>
+            <StringItem index="6" value="Salad"/>
+            <StringItem index="7" value="Rice"/>
+            <StringItem index="8" value="Pork"/>
+            <StringItem index="9" value="Chevon"/>
+            <StringItem index="10" value="Drink"/>
+            <StringItem index="11" value="Sushi Sashimi"/>
           </StringArray>
         </Property>
         <Property name="toolTipText" type="java.lang.String" value="S&#x103;&#x301;p x&#xea;&#x301;p"/>

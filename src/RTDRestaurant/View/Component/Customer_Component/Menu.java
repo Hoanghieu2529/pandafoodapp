@@ -41,8 +41,8 @@ public class Menu extends javax.swing.JPanel {
 
     //Khởi tạo data cho Menu 
     public void initMenuItem() {
-        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/Icons/MenuBar/astrology.png")), "Menu - Zodiac Concept", "Aries - Bạch Dương", "Taurus - Kim Ngưu", "Gemini - Song Tử", "Cancer - Cự Giải",
-                "Leo - Sư Tử", "Virgo - Xử Nữ", "Libra - Thiên Bình", "Scorpio - Bọ Cạp", "Sagittarius - Nhân Mã", "Capricorn - Ma Kết", "Aquarius - Bảo Bình", "Pisces - Song Ngư"));
+        addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/Icons/MenuBar/astrology.png")), "Menu - Special Dishes", "Lamb - Cừu", "Beef Wagyu - Bò", "Combo - Tiết kiệm", "KingCrab - Cua",
+                "Leo - Sư Tử", "Virgo - Xử Nữ", "Salad - Rau", "Rice - Cơm", "Pork - Heo", "Chevon - Dê", "Drink - Nước giải khát", "Sushi - Sashimi"));
         addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/Icons/MenuBar/table.png")), "Đặt bàn", "Tầng 1", "Tầng 2", "Tầng 3"));
         addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/Icons/MenuBar/information.png")), "About US"));
         addMenu(new ModelMenu(null, ""));
@@ -113,7 +113,7 @@ public class Menu extends javax.swing.JPanel {
         logo.setForeground(new java.awt.Color(255, 255, 255));
         logo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         logo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/restaurant (1).png"))); // NOI18N
-        logo.setText("<html> Royal TheDreamers <br> Restaurant ★★★★★</html>");
+        logo.setText("<html>Panda Food <br> Restaurant ★★★★★</html>");
         logo.setIconTextGap(15);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);

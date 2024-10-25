@@ -61,53 +61,53 @@ public class FoodMenu_Form extends javax.swing.JPanel {
             
             //Set Data cho Tiêu đề Menu
             switch (type) {
-                case "Arias" -> {
-                    lbTitle.setText("Menu/" + type + " - Bạch Dương");
-                    lbTitle.setIcon(new ImageIcon(getClass().getResource("/Icons/MenuBar/aries.png")));
+                case "Lamb" -> {
+                    lbTitle.setText("Menu/" + type + " - Cuu");
+                    lbTitle.setIcon(new ImageIcon(getClass().getResource("/Icons/MenuBar/Lamb.png")));
                 }
-                case "Taurus" -> {
-                    lbTitle.setText("Menu/" + type + " - Kim Ngưu");
-                    lbTitle.setIcon(new ImageIcon(getClass().getResource("/Icons/MenuBar/taurus.png")));
+                case "Beef Wagyu" -> {
+                    lbTitle.setText("Menu/" + type + " - Bo Wagyu");
+                    lbTitle.setIcon(new ImageIcon(getClass().getResource("/Icons/MenuBar/Beef.png")));
                 }
-                case "Gemini" -> {
-                    lbTitle.setText("Menu/" + type + " - Song tử");
-                    lbTitle.setIcon(new ImageIcon(getClass().getResource("/Icons/MenuBar/gemini.png")));
+                case "Combo" -> {
+                    lbTitle.setText("Menu/" + type + " - Ưu đãi");
+                    lbTitle.setIcon(new ImageIcon(getClass().getResource("/Icons/MenuBar/combo.png")));
                 }
-                case "Cancer" -> {
-                    lbTitle.setText("Menu/" + type + " - Cự Giải");
-                    lbTitle.setIcon(new ImageIcon(getClass().getResource("/Icons/MenuBar/cancer.png")));
+                case "KingCarb" -> {
+                    lbTitle.setText("Menu/" + type + " - Cua Hoàng Đế");
+                    lbTitle.setIcon(new ImageIcon(getClass().getResource("/Icons/MenuBar/KingCarb.png")));
                 }
-                case "Leo" -> {
-                    lbTitle.setText("Menu/" + type + " - Sư tử");
-                    lbTitle.setIcon(new ImageIcon(getClass().getResource("/Icons/MenuBar/leo.png")));
+                case "KoreanFood" -> {
+                    lbTitle.setText("Menu/" + type + " - Món Hàn");
+                    lbTitle.setIcon(new ImageIcon(getClass().getResource("/Icons/MenuBar/Korean Food.png")));
                 }
-                case "Virgo" -> {
-                    lbTitle.setText("Menu/" + type + " - Xử Nữ");
-                    lbTitle.setIcon(new ImageIcon(getClass().getResource("/Icons/MenuBar/virgo.png")));
+                case "Dessert" -> {
+                    lbTitle.setText("Menu/" + type + " - Tráng Miệng");
+                    lbTitle.setIcon(new ImageIcon(getClass().getResource("/Icons/MenuBar/Dessert.png")));
                 }
-                case "Libra" -> {
-                    lbTitle.setText("Menu/" + type + " - Thiên Bình");
-                    lbTitle.setIcon(new ImageIcon(getClass().getResource("/Icons/MenuBar/libra.png")));
+                case "Salad" -> {
+                    lbTitle.setText("Menu/" + type + " - Rau");
+                    lbTitle.setIcon(new ImageIcon(getClass().getResource("/Icons/MenuBar/Salad.png")));
                 }
-                case "Scorpio" -> {
-                    lbTitle.setText("Menu/" + type + " - Bọ Cạp");
-                    lbTitle.setIcon(new ImageIcon(getClass().getResource("/Icons/MenuBar/scorpio.png")));
+                case "Rice" -> {
+                    lbTitle.setText("Menu/" + type + " - Cơm");
+                    lbTitle.setIcon(new ImageIcon(getClass().getResource("/Icons/MenuBar/Rice.png")));
                 }
-                case "Sagittarius" -> {
-                    lbTitle.setText("Menu/" + type + " - Nhân Mã");
-                    lbTitle.setIcon(new ImageIcon(getClass().getResource("/Icons/MenuBar/sagittarius.png")));
+                case "Pork" -> {
+                    lbTitle.setText("Menu/" + type + " - Heo");
+                    lbTitle.setIcon(new ImageIcon(getClass().getResource("/Icons/MenuBar/Pork.png")));
                 }
-                case "Capricorn" -> {
-                    lbTitle.setText("Menu/" + type + " - Ma Kết");
-                    lbTitle.setIcon(new ImageIcon(getClass().getResource("/Icons/MenuBar/capricorn.png")));
+                case "Chevon" -> {
+                    lbTitle.setText("Menu/" + type + " - Dê");
+                    lbTitle.setIcon(new ImageIcon(getClass().getResource("/Icons/MenuBar/Chevon.png")));
                 }
-                case "Aquarius" -> {
-                    lbTitle.setText("Menu/" + type + " - Bảo Bình");
-                    lbTitle.setIcon(new ImageIcon(getClass().getResource("/Icons/MenuBar/aquarius.png")));
+                case "Drink" -> {
+                    lbTitle.setText("Menu/" + type + " - Nước Giải Khát");
+                    lbTitle.setIcon(new ImageIcon(getClass().getResource("/Icons/MenuBar/Drink.png")));
                 }
-                case "Pisces" -> {
-                    lbTitle.setText("Menu/" + type + " - Song Ngư");
-                    lbTitle.setIcon(new ImageIcon(getClass().getResource("/Icons/MenuBar/pisces.png")));
+                case "Sushi" -> {
+                    lbTitle.setText("Menu/" + type + " - Sushi");
+                    lbTitle.setIcon(new ImageIcon(getClass().getResource("/Icons/MenuBar/sushi.png")));
                 }
                 default -> {
                 }
@@ -194,7 +194,7 @@ public class FoodMenu_Form extends javax.swing.JPanel {
         lbTitle.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lbTitle.setForeground(new java.awt.Color(108, 91, 123));
         lbTitle.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/MenuBar/aries.png"))); // NOI18N
-        lbTitle.setText("Menu/Arias - Bạch Dương");
+        lbTitle.setText("Menu/Arias");
         lbTitle.setIconTextGap(10);
         lbTitle.setInheritsPopupMenu(false);
 
