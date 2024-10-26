@@ -122,6 +122,7 @@ public class MS_Admin_Confirm extends javax.swing.JDialog {
         cmdCancel = new PandaRestaurant.View.Swing.ButtonOutLine();
         lbMessage = new javax.swing.JLabel();
         lbIcon = new javax.swing.JLabel();
+        cmdExit = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setBackground(new java.awt.Color(215, 215, 215));
@@ -165,6 +166,13 @@ public class MS_Admin_Confirm extends javax.swing.JDialog {
 
         lbIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/warning (1).png"))); // NOI18N
 
+        cmdExit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/close (4).png"))); // NOI18N
+        cmdExit.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                cmdExitMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout panelRound1Layout = new javax.swing.GroupLayout(panelRound1);
         panelRound1.setLayout(panelRound1Layout);
         panelRound1Layout.setHorizontalGroup(
@@ -180,7 +188,9 @@ public class MS_Admin_Confirm extends javax.swing.JDialog {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelRound1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(lbIcon)
-                .addGap(222, 222, 222))
+                .addGap(200, 200, 200)
+                .addComponent(cmdExit)
+                .addContainerGap())
             .addGroup(panelRound1Layout.createSequentialGroup()
                 .addGap(85, 85, 85)
                 .addComponent(cmdOK, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -191,8 +201,11 @@ public class MS_Admin_Confirm extends javax.swing.JDialog {
         panelRound1Layout.setVerticalGroup(
             panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelRound1Layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(lbIcon)
+                .addGroup(panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelRound1Layout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addComponent(lbIcon))
+                    .addComponent(cmdExit, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(20, 20, 20)
                 .addComponent(lbTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(20, 20, 20)
@@ -228,6 +241,11 @@ public class MS_Admin_Confirm extends javax.swing.JDialog {
     private void cmdCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdCancelActionPerformed
         closeMenu();
     }//GEN-LAST:event_cmdCancelActionPerformed
+
+    private void cmdExitMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cmdExitMouseClicked
+        // TODO add your handling code here:
+        closeMenu();
+    }//GEN-LAST:event_cmdExitMouseClicked
     
     private void closeMenu() {
         if (animator.isRunning()) {
@@ -249,6 +267,7 @@ public class MS_Admin_Confirm extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private PandaRestaurant.View.Swing.ButtonOutLine cmdCancel;
+    private javax.swing.JLabel cmdExit;
     private PandaRestaurant.View.Swing.ButtonOutLine cmdOK;
     private javax.swing.JLabel lbIcon;
     private javax.swing.JLabel lbMessage;

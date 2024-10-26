@@ -24,7 +24,7 @@ public class DatabaseConnection {
     }
     //Thực hiện kết nối tới Database
     public void connectToDatabase() throws SQLException {
-        final String url = "jdbc:oracle:thin:@localhost:1521:orcl";
+        final String url = "jdbc:oracle:thin:@localhost:1521:Free";
         final String username = "panda";
         final String password = "123";
         connection = DriverManager.getConnection(url, username, password);
