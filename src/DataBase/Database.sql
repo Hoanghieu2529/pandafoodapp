@@ -1245,6 +1245,9 @@ INSERT INTO NguoiDung(ID_ND,Email,MatKhau,Trangthai,Vaitro) VALUES (116,'Admin1.
 INSERT INTO NguoiDung(ID_ND,Email,MatKhau,Trangthai,Vaitro) VALUES (115,'Admin2.panda@gmail.com','123','Verified','Nhan Vien');
 INSERT INTO NguoiDung(ID_ND,Email,MatKhau,Trangthai,Vaitro) VALUES (117,'Admin3.panda@gmail.com','123','Verified','Nhan Vien Kho');
 --
+
+SELECT * FROM nguoidung;
+
 ---- check vai tro
 --SELECT search_condition
 --FROM all_constraints
@@ -1270,10 +1273,25 @@ INSERT INTO NguoiDung(ID_ND,Email,MatKhau,Trangthai,Vaitro) VALUES (114,'Pandadm
 ALTER SESSION SET NLS_DATE_FORMAT = 'dd-MM-YYYY';
 
 --Co tai khoan
-INSERT INTO NhanVien(ID_NV,TenNV,NgayVL,SDT,Chucvu,ID_ND,ID_NQL,Tinhtrang) VALUES (100,'Tran The Bao','10/05/2024','0848044725','Quan ly',100,100,'Dang lam viec');
-INSERT INTO NhanVien(ID_NV,TenNV,NgayVL,SDT,Chucvu,ID_ND,ID_NQL,Tinhtrang) VALUES (101,'Nguyen Duy Hieu','20/05/2024','0838033334','Tiep tan',101,100,'Dang lam viec');
-INSERT INTO NhanVien(ID_NV,TenNV,NgayVL,SDT,Chucvu,ID_ND,ID_NQL,Tinhtrang) VALUES (102,'Nguyen Anh Duc','19/05/2024','0838033234','Kho',102,100,'Dang lam viec');
-INSERT INTO NhanVien(ID_NV,TenNV,NgayVL,SDT,Chucvu,ID_ND,ID_NQL,Tinhtrang) VALUES (103,'Ho Thi Ngoc Dinh','19/05/2024','0838033234','Tiep tan',103,100,'Dang lam viec');
+INSERT INTO NhanVien(ID_NV,TenNV,NgayVL,SDT,Chucvu,ID_ND,ID_NQL,Tinhtrang) VALUES (100,'Tran The Bao','10/05/2024','0848044725','Kho',102,101,'Dang lam viec');
+INSERT INTO NhanVien(ID_NV,TenNV,NgayVL,SDT,Chucvu,ID_ND,ID_NQL,Tinhtrang) VALUES (101,'Nguyen Duy Hieu','20/05/2024','0838033334','Tiep tan',100,101,'Dang lam viec');
+INSERT INTO NhanVien(ID_NV,TenNV,NgayVL,SDT,Chucvu,ID_ND,ID_NQL,Tinhtrang) VALUES (102,'Nguyen Anh Duc','19/05/2024','0838033234','Quan ly',101,101,'Dang lam viec');
+INSERT INTO NhanVien(ID_NV,TenNV,NgayVL,SDT,Chucvu,ID_ND,ID_NQL,Tinhtrang) VALUES (103,'Ho Thi Ngoc Dinh','19/05/2024','0838033234','Tiep tan',103,101,'Dang lam viec');
+
+-- Update Tran The Bao's record in NhanVien to have the correct ID_ND and ID_NQL
+UPDATE NhanVien SET Chucvu= 'Kho'  WHERE ID_NV = 100 AND TenNV = 'Tran The Bao';
+
+-- Update Nguyen Duy Hieu's record in NhanVien to have the correct ID_ND and ID_NQL
+UPDATE NhanVien SET ID_ND = 100, ID_NQL = 101 WHERE ID_NV = 101 AND TenNV = 'Nguyen Duy Hieu';
+
+-- Update Nguyen Anh Duc's record in NhanVien to have the correct ID_ND and ID_NQL
+UPDATE NhanVien SET Chucvu = 'Quan ly' WHERE ID_NV = 102 AND TenNV = 'Nguyen Anh Duc';
+
+-- Update Ho Thi Ngoc Dinh's record in NhanVien to have the correct ID_ND and ID_NQL
+UPDATE NhanVien SET ID_ND = 103, ID_NQL = 101 WHERE ID_NV = 103 AND TenNV = 'Ho Thi Ngoc Dinh';
+
+select * from NhanVien;
+
 --Khong co tai khoan
 INSERT INTO NhanVien(ID_NV,TenNV,NgayVL,SDT,Chucvu,ID_NQL,Tinhtrang) VALUES (104,'Le Tuan Anh','10/05/2024','0838033232','Phuc vu',100,'Dang lam viec');
 INSERT INTO NhanVien(ID_NV,TenNV,NgayVL,SDT,Chucvu,ID_NQL,Tinhtrang) VALUES (105,'Nguyen Quoc Thinh','11/05/2024','0838033734','Phuc vu',100,'Dang lam viec');
