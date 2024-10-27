@@ -340,6 +340,7 @@ public class ServiceAdmin {
         p.execute();
         p.close();
     }
+    
     //Kinh doanh trở lại một món ăn (Cập nhật TrangThai='Dang kinh doanh')
     public void BackSell(int idMA) throws SQLException {
         String sql = "UPDATE MonAn SET TrangThai = 'Dang kinh doanh' WHERE ID_MonAn=?";
