@@ -1,4 +1,4 @@
-    package PandaRestaurant.View.Dialog;
+package PandaRestaurant.View.Dialog;
 
 import PandaRestaurant.Controller.Service.ServiceAdmin;
 import PandaRestaurant.Model.ModelMonAn;
@@ -19,19 +19,19 @@ import org.jdesktop.animation.timing.TimingTarget;
 import org.jdesktop.animation.timing.TimingTargetAdapter;
 
 public class MS_Admin_Confirm extends javax.swing.JDialog {
-    
+
     private final Animator animator;
     private boolean show = true;
     private Frame frame;
     private ServiceAdmin service;
-    
+
     public MS_Admin_Confirm(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         service = new ServiceAdmin();
         this.frame = parent;
         setOpacity(0f);
-        getContentPane().setBackground(Color.WHITE);
+        getContentPane().setBackground(new Color(250, 250, 250));
         TimingTarget target = new TimingTargetAdapter() {
             @Override
             public void timingEvent(float fraction) {
@@ -41,19 +41,20 @@ public class MS_Admin_Confirm extends javax.swing.JDialog {
                     setOpacity(1f - fraction);
                 }
             }
-            
+
             @Override
             public void end() {
                 if (show == false) {
                     setVisible(false);
                 }
             }
-            
+
         };
         animator = new Animator(200, target);
         animator.setResolution(0);
         animator.setAcceleration(0.5f);
     }
+
     //Xác nhận ngưng kinh doanh món ăn
     public void ConfirmStop(ModelMonAn data) {
         setLocationRelativeTo(frame);
@@ -68,11 +69,11 @@ public class MS_Admin_Confirm extends javax.swing.JDialog {
                 } catch (SQLException ex) {
                     Logger.getLogger(MS_Admin_Confirm.class.getName()).log(Level.SEVERE, null, ex);
                 }
-            } 
+            }
         });
         setVisible(true);
     }
-    
+
     //Xác nhận kinh doanh trở lại món ăn
     public void ConfirmBack(ModelMonAn data) {
         setLocationRelativeTo(frame);
@@ -87,12 +88,11 @@ public class MS_Admin_Confirm extends javax.swing.JDialog {
                 } catch (SQLException ex) {
                     Logger.getLogger(MS_Admin_Confirm.class.getName()).log(Level.SEVERE, null, ex);
                 }
-            } 
+            }
         });
         setVisible(true);
     }
-    
-    
+
     //Xác nhận sa thải nhân viên
     public void ConfirmFire(ModelNhanVien data) {
         setLocationRelativeTo(frame);
@@ -107,11 +107,11 @@ public class MS_Admin_Confirm extends javax.swing.JDialog {
                 } catch (SQLException ex) {
                     Logger.getLogger(MS_Admin_Confirm.class.getName()).log(Level.SEVERE, null, ex);
                 }
-            } 
+            }
         });
         setVisible(true);
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -246,7 +246,7 @@ public class MS_Admin_Confirm extends javax.swing.JDialog {
         // TODO add your handling code here:
         closeMenu();
     }//GEN-LAST:event_cmdExitMouseClicked
-    
+
     private void closeMenu() {
         if (animator.isRunning()) {
             animator.stop();
@@ -254,7 +254,7 @@ public class MS_Admin_Confirm extends javax.swing.JDialog {
         show = false;
         animator.start();
     }
-    
+
     public void paintComponent(Graphics g) {
         Graphics2D g2 = (Graphics2D) g;
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
