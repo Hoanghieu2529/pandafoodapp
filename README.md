@@ -14,7 +14,7 @@
 - `Oracle SQL` <br>
 
 #3. Đồ án thi môn CÔng nghệ JAVA
-GV hướng dẫn: Sử Nhật Hạ
+GV hướng dẫn: Sử Nhật Hạ<br>
 THành viên:  	
 1. Nguyễn Anh Đức		  MSSV: 23210102 
 2. Hồ Thị Ngọc Định	  MSSV: 23210099 
