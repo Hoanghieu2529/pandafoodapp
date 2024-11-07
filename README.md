@@ -2,7 +2,7 @@
 - Ứng dụng quản lý nhà hàng Panda. <br> 
 - Ngôn ngữ sử dụng: `Java` <br>
 - Công cụ thiết kế: `Java swing`  <br>
-- Cơ sở dữ liệu: `Mysql`  <br>
+- Cơ sở dữ liệu: `Oracle` or `Mysql`  <br>
 - IDE: `Netbeans`  <br>
 - Công cụ quản lý phiên bản: `git`  <br>
 - Công cụ quản lý mã nguồn: `github`  <br>
