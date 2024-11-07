@@ -13,4 +13,11 @@
 - `IDE: Netbeans` <br>
 - `Oracle SQL` <br>
 
-
+#3. Đồ án thi môn CÔng nghệ JAVA
+GV hướng dẫn: Sử Nhật Hạ
+THành viên:  	
+1. Nguyễn Anh Đức		  MSSV: 23210102 
+2. Hồ Thị Ngọc Định	  MSSV: 23210099 
+3. Trần Thế Bảo		    MSSV:	23210092 
+4. Nguyễn Duy Hiếu		MSSV:	23210111 
+5. Lê Tuấn Anh			  MSSV:	23210089 
